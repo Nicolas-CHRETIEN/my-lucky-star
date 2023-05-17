@@ -1,0 +1,35 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarColor02">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link active" href="{{path('home')}}">Accueil
+            <span class="visually-hidden">(current)</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{path('app_stars')}}">Etoiles disponibles</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{path('app_concept')}}">Le concept</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Se connecter</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Les types d'étoile</a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="/starsType/category">Les catégories</a>
+            <a class="dropdown-item" href="/starsType/number">Le nombre</a>
+            <a class="dropdown-item" href="/starsType/lifeDuration">La durée de vie</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="/starsType/lifeEnd">La fin de vie</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Detailed star{% endblock %}
+
+{% block body %}
+    <h1 class="mt-5 mb-8 text-center">{{star.title}}</h1>
+
+    
+        <img src={{star.image}} class="card-img-top image image_stars" alt="Image de l'étoile">
+        <div class="card-body d-flex flex-column justify-content-around align-items-center text-center">
+            <p class="card-text">{{star.title}} est une étoile de la constellation {{star.constellation}} abritant {{star.planetsNumber}} planètes</p>
+            <p class="card-text">{{star.smallDescription}}</p>
+            <p class="card-text">{{star.description}}</p>
+            <div class="d-flex flex-column align-items-start">
+                <p class="card-text">Distance: {{star.distance}} années lumières de la terre.</p>
+                <p class="card-text">Taille: {{star.size}} fois la taille du soleil.</p>
+                <p class="card-text">Nombre de planètes: {{star.planetsNumber}} planètes potentielement habitable orbitent autour de {{star.title}}.</p>
+            </div>
+            {% if star.discount == 0 %}
+            <p class="text-primary">{{star.price}} €</p>
+            {% else %}
+            <p class="text-danger mt-4 mb-0 text-decoration-line-through">{{star.price}} €</p>
+            <p class="text-success  mb-0">{{star.price * (1 - star.discount)}} €</p>
+            <p class="text-secondary mb-6">Soit une réduction de {{star.discount * 100}} % </p>
+            {% endif %}
+            <a href="/stars/{{star.title}}" class="btn btn-warning">Acheter</a>
+    </div>
+
+{% endblock %}
