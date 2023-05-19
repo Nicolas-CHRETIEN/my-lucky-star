@@ -1,0 +1,84 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajout d'une étoile{% endblock %}
+
+{% block body %}
+    {# form_start and end ar the commands to create the form on twig. #}
+    {# It's also possible to show it only with {{ form(form) }} #}
+    {{ form_start(form) }}
+
+        {# To change something in the form I need to write between start and end: #}
+        <div class="container mt-5 mb-5">
+
+            <h1> Ajouter une nouvelle étoile à vendre</h1>
+
+            <div class="form-group">
+                {{ form_label(form.title, 'Nom de l\'étoile') }}
+            {{ form_widget(form.title, {'attr': {'class': 'form-control mb-4', 'required': 'required'}}) }}
+            </div>
+
+            {# Possibility to do the same thing that above with: {{ form_row(form.title, {'label' : "Nom de l\'étoile", 'attr': {'class': 'form-control mb-4', 'required': 'required'}}) }} #}
+            {# {{ form-row }} takes less place. #}
+
+            <div class="form-group">
+                {{ form_label(form.distance, 'Distance par rapport au soleil (en années lumière)') }}
+                {{ form_widget(form.distance, {'attr': {'class': 'form-control mb-4', 'required': 'required'}}) }}
+            </div>
+            
+            <div class="form-group">
+                {{ form_label(form.smallDescription, 'Brève description de l\'étoile') }}
+                {{ form_widget(form.smallDescription, {'attr': {'class': 'form-control mb-4', 'required': 'required'}}) }}
+            </div>
+            
+            <div class="form-group">
+                {{ form_label(form.description, 'Description complète de l\'étoile') }}
+                {{ form_widget(form.description, {'attr': {'class': 'form-control mb-4', 'cols': 50, 'rows': 10, 'required': 'required'}}) }}
+            </div>
+            
+            <div class="form-group">
+                {{ form_label(form.image, 'url de l\'image') }}
+                {{ form_widget(form.image, {'attr': {'class': 'form-control mb-4', 'required': 'required'}}) }}
+            </div>
+            
+            <div class="form-group">
+                {{ form_label(form.size, 'Taille de l\'étoile') }}
+                {{ form_widget(form.size, {'attr': {'class': 'form-control mb-4', 'required': 'required'}}) }}
+            </div>
+            
+            <div class="form-group">
+                {{ form_label(form.planetsNumber, 'Nombre de planètes connues orbitant autour de l\'étoile') }}
+                {{ form_widget(form.planetsNumber, {'attr': {'class': 'form-range indicatedRange'}}) }}
+                <output class="rangeValue mb-4">
+            </div>
+            
+            <div class="form-group">
+                {{ form_label(form.constellation, 'Constellation ou se situe l\'étoile') }}
+                {{ form_widget(form.constellation, {'attr': {'class': 'form-control mb-4', 'required': 'required'}}) }}
+            </div>
+            
+            <div class="form-group">
+                {{ form_label(form.price, 'Prix de l\'étoile') }}
+                {{ form_widget(form.price, {'attr': {'class': 'form-control mb-4', 'required': 'required'}}) }}
+            </div>
+            
+            <div class="form-group">
+                {{ form_label(form.discount, 'Réduction (non obligatoire)') }}
+                {{ form_widget(form.discount, {'attr': {'class': 'form-control mb-4'}}) }}
+            </div>
+
+            {{ form_widget(form.save, {'attr': {'class': 'btn btn-warning mb-3'}}) }}
+
+        </div>
+
+
+
+
+
+
+    {{ form_end(form) }}
+    
+
+{% endblock %}
+{% block javascripts %}
+            <script src="../..//js/rangeButtonForm.js"</script>
+        {% endblock %}
