@@ -11,7 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class MainController extends AbstractController {
 
-    
+    // ------------------- Home page. --------------------
     /**
     *
     * @Route("/", name = "home")
@@ -19,6 +19,49 @@ class MainController extends AbstractController {
     
 
     public function home() {
-        return $this->render("home.html.twig");
+        return $this->render("home/home.html.twig");
+    }
+
+
+    // ------------------- Universe page. -------------------------
+
+    /**
+    *
+    * @Route("/universe", name = "universe")
+    */
+    
+
+    public function universe() {
+        return $this->render("home/universe.html.twig");
+    }
+
+
+
+
+    // ----------------------- Galaxy page. ------------------------
+
+
+    /**
+    *
+    * @Route("/galaxy", name = "galaxy")
+    */
+    
+
+    public function galaxy() {
+        return $this->render("home/galaxy.html.twig");
+    }
+
+
+    // -------------------------- Solar system page. -----------------------
+
+
+    /**
+    *
+    * @Route("/solarSystem", name = "solar_system")
+    */
+    
+
+    public function solarSystem() {
+        return $this->render("home/solarSystem.html.twig");
     }
 }

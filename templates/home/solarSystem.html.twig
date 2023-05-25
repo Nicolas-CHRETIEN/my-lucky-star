@@ -1,0 +1,32 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <main class="container mt-5">
+        <h1 class="mt-3 mb-5">L'exemple du système solaire:</h1>
+        <p>
+            Le système solaire contient 8 planètes principales.
+            Sur ces 8 planètes, seules 4 sont dites rocheuses et ont donc une surface solide capable d'abriter la vie.
+            Pour autant, les planètes gazeuses, telles que Jupiter ou Saturne, possèdent de nombreuses lunes elles aussi susceptibles d'abriter la vie.
+            De même, la vie pourrait apparaitre sur l'une des 5 planètes naines actuellement connues dans le système solaire, ou encore sur un astéroïde.
+        </p>
+
+
+        <p>
+            {{"<strong>Reproduction du système solaire:</strong>"}}
+        </p>
+        <p>
+            (attention, les distances ne sont pas à l'échelle).
+        </p>
+
+        <canvas id="canvas" class="canvas ms-5 mt-5" height="2000" width="2000"></canvas>
+    </main>
+{% endblock %}
+{% block javascripts %}
+    <script type="text/javascript" src = "../..//js/addSpinningImage.js"></script>
+    <script type="text/javascript" src = "../..//js/addShadow.js"></script>
+    <script type="text/javascript" src = "../..//js/addPlanet.js"></script>
+    <script type="text/javascript" src = "../..//js/addMoon.js"></script>
+    <script type="text/javascript" src = "../..//js/addAsteroid.js"></script>
+    <script type="text/javascript" src = "../..//js/drawFilledArc.js"></script>
+    <script type="text/javascript" src = "../..//js/drawnings.js"></script>
+{% endblock %}

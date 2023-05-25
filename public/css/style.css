@@ -5,3 +5,12 @@
 .image_stars {
     height: 302px;
 }
+
+.canvas {
+    height: 1000px;
+    width: 1000px;
+    background-color: rgb(0, 0, 0);
+}
+.form-add-picture-field {
+    width: 42%;
+}

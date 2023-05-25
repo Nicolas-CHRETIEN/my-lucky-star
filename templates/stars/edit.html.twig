@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Ajout d'une étoile{% endblock %}
+{% block title %}Modification d'une étoile{% endblock %}
 
 {% form_theme form _self %}
 
@@ -12,7 +12,7 @@
         {# To change something in the form I need to write between start and end: #}
         <div class="container mt-5 mb-5">
 
-            <h1> Ajouter une nouvelle étoile à vendre</h1>
+            <h1> Modifier la description de l'étoile</h1>
 
             <div class="form-group">
                 {{ form_label(form.title, 'Nom de l\'étoile') }}
@@ -72,7 +72,7 @@
                 {{ form_widget(form.discount, {'attr': {'class': 'form-control mb-4'}}) }}
             </div>
 
-            <button type="submit" class="btn btn-warning mb-3">Créer nouvelle étoile</button>
+            <button type="submit" class="btn btn-warning mb-3">Enregistrer</button>
 
         </div>
 
