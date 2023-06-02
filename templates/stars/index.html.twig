@@ -21,7 +21,7 @@
                         <p class="text-success  mb-0">{{star.price * (1 - star.discount / 100)}} €</p>
                         <p class="text-secondary mb-6">Soit une réduction de {{star.discount}} % </p>
                         {% endif %}
-                        <a href="/stars/{{star.title}}" class="btn btn-primary">Afficher plus</a>
+                        <a href="/stars/{{star.id}}" class="btn btn-primary">Afficher plus</a>
                     </div>
                 </div>
             {% endfor %}

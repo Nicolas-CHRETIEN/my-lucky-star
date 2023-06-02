@@ -14,63 +14,7 @@
 
             <h1> Ajouter une nouvelle étoile à vendre</h1>
 
-            <div class="form-group">
-                {{ form_label(form.title, 'Nom de l\'étoile') }}
-            {{ form_widget(form.title, {'attr': {'class': 'form-control mb-4', 'required': 'required'}}) }}
-            </div>
-
-            {# Possibility to do the same thing that above with: {{ form_row(form.title, {'label' : "Nom de l\'étoile", 'attr': {'class': 'form-control mb-4', 'required': 'required'}}) }} #}
-            {# {{ form-row }} takes less place. #}
-
-            <div class="form-group">
-                {{ form_label(form.distance, 'Distance par rapport au soleil (en années lumière)') }}
-                {{ form_widget(form.distance, {'attr': {'class': 'form-control mb-4', 'required': 'required'}}) }}
-            </div>
-            
-            <div class="form-group">
-                {{ form_label(form.smallDescription, 'Brève description de l\'étoile') }}
-                {{ form_widget(form.smallDescription, {'attr': {'class': 'form-control mb-4', 'required': 'required'}}) }}
-            </div>
-            
-            <div class="form-group">
-                {{ form_label(form.description, 'Description complète de l\'étoile') }}
-                {{ form_widget(form.description, {'attr': {'class': 'form-control mb-4', 'cols': 50, 'rows': 10, 'required': 'required'}}) }}
-            </div>
-            
-            <div class="form-group">
-                {{ form_label(form.image, 'url de l\'image') }}
-                {{ form_widget(form.image, {'attr': {'class': 'form-control mb-4', 'required': 'required'}}) }}
-            </div>
-            
-            <div class="form-group">
-                {{ form_label(form.size, 'Taille de l\'étoile') }}
-                {{ form_widget(form.size, {'attr': {'class': 'form-control mb-4', 'required': 'required'}}) }}
-            </div>
-            
-            <div class="form-group">
-                {{ form_label(form.planetsNumber, 'Nombre de planètes connues orbitant autour de l\'étoile') }}
-                {{ form_widget(form.planetsNumber, {'attr': {'class': 'form-range indicatedRange'}}) }}
-                <output class="rangeValue mb-4">
-            </div>
-            
-            <div class="form-group">
-                {{ form_label(form.constellation, 'Constellation ou se situe l\'étoile') }}
-                {{ form_widget(form.constellation, {'attr': {'class': 'form-control mb-5', 'required': 'required'}}) }}
-            </div>
-
-            <div class="form-group">
-                {{ form_widget(form.otherImages, {'attr': {'class': 'form-control mb-4'}}) }}
-            </div>
-            
-            <div class="form-group mt-5">
-                {{ form_label(form.price, 'Prix de l\'étoile') }}
-                {{ form_widget(form.price, {'attr': {'class': 'form-control mb-4', 'required': 'required'}}) }}
-            </div>
-            
-            <div class="form-group">
-                {{ form_label(form.discount, 'Réduction (non obligatoire)') }}
-                {{ form_widget(form.discount, {'attr': {'class': 'form-control mb-4'}}) }}
-            </div>
+            {% include '/stars/_starForm.html.twig' %}
 
             <button type="submit" class="btn btn-warning mb-3">Créer nouvelle étoile</button>
 
@@ -129,6 +73,6 @@
 
 {% block javascripts %}
             <script src="../../js/jquery.min.js"></script>
-            <script src="../..//js/rangeButtonForm.js"> </script>
-            <script src="../..//js/addImage.js"> </script>
+            <script src="../..//js/star_form/rangeButtonForm.js"> </script>
+            <script src="../..//js/star_form/addImage.js"> </script>
         {% endblock %}

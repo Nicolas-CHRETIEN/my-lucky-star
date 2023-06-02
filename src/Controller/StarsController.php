@@ -5,15 +5,18 @@ namespace App\Controller;
 
 use App\Entity\Stars;
 use App\Entity\Images;
+use App\Form\ImageType;
 use App\Form\CreateStarType;
 use Doctrine\ORM\Mapping\Entity;
 use App\Repository\StarsRepository;
+use App\Repository\ImagesRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 class StarsController extends AbstractController {
 
@@ -87,6 +90,7 @@ class StarsController extends AbstractController {
 
         // $form = $this->createFormBuilder($star_create)
         //             ->add('title')
+        //             ->add('slug')
         //             ->add('distance')
         //             ->add('smallDescription')
         //             ->add('description')
@@ -133,7 +137,7 @@ class StarsController extends AbstractController {
             $this->addFlash('success', "L'étoile <strong>{$star->getTitle()}</strong> a bien été créée."); //The first parameter is random, doesn't matter the name you give. The second one is the message you wanna show.
 
             // Then redirect to the page we want to go next. Here the star I just created:
-            return $this->redirectToRoute('app_stars_knowmore', ['title' => $star->getTitle()]); //The method redirecToRoute offer to go to an other page. Here I use the just created title to go to the corresponding page as I do in knowMore function below.
+            return $this->redirectToRoute('app_stars_knowmore', ['id' => $star->getId()]); //The method redirecToRoute offer to go to an other page. Here I use the just created title to go to the corresponding page as I do in knowMore function below.
 
 
         }
@@ -147,20 +151,34 @@ class StarsController extends AbstractController {
     
     /**
     *
-    * @Route("/stars/{title}/edit", name="stars_edit")
-    * #[Entity('Stars', expr: 'repository.find({title})')]
+    * @Route("/stars/{id}/edit", name="stars_edit")
     * @return Response
     */
 
-    public function edit (Stars $star, Request $request, StarsRepository $repository, EntityManagerInterface $manager) {
+    public function edit (Stars $star, Request $request, EntityManagerInterface $manager, ImagesRepository $repository) {
+        
+        // Create the form with the CreateStarType class containing the form model I created.
+        $form = $this->createForm(CreateStarType::class, $star);
+
         
 
-        $form = $this->createForm(CreateStarType::class, $star);
+        // HandleRequest is needed to read data outside of superglobals get and post.
         $form->handleRequest($request);
 
 
         if ($form->isSubmitted() && $form->isValid()) {
+            
+            $images = $repository->findBy(["starsID" => $star->getId()],);
+            
+            // Remove the corresponding already registered stars.
+            foreach ($images as $image) {
+                $manager->remove($image);
+            }
+            
+            
 
+
+            // For each image to add, give it the star id and save.
             foreach ($star->getOtherImages() as $image) {
 
                 $image->setStarsID($star);
@@ -172,7 +190,7 @@ class StarsController extends AbstractController {
 
             $this->addFlash('success', "L'étoile <strong>{$star->getTitle()}</strong> a bien été modifiée.");
 
-            return $this->redirectToRoute('app_stars_knowmore', ['title' => $star->getTitle()]);
+            return $this->redirectToRoute('app_stars_knowmore', ['id' => $star->getId()]);
         }
 
         return $this->render("stars/edit.html.twig",["form"=> $form->createView(),"star" => $star]);
@@ -184,27 +202,26 @@ class StarsController extends AbstractController {
     // ----------------------- Focus on 1 product. ---------------------------
     /**
      * Use a route with a parameter to send differents informations in function of the name of the route.
-     * @Route("/stars/{title}", name="app_stars_knowmore")
-     * 
+     * @Route("/stars/{id}", name="app_stars_knowmore")
      * 
      */
 
-     public function knowMore($title, StarsRepository $repository): Response {
+     public function knowMore($id, StarsRepository $repository): Response {
 
-        // I select the informations corresponding to the title.
-        // Below I use the findOneByX selection. I make title to send the corresponding datas corresponding to the title in the shape of an array.
+        // I select the informations corresponding to the id.
+        // Below I use the findOneByX selection. I make id to send the corresponding datas corresponding to the id in the shape of an array.
 
-        $star = $repository->findOneByTitle($title);
+        $star = $repository->findOneById($id);
         return $this->render('stars/knowMore.html.twig', ['star' => $star]);
     }
 
-    // ----------------------- Know more about stars. ---------------------------
+    // ----------------------- category stars. ---------------------------
     /**
     *
-    * @Route("/starsType/{type}", name = "app_starsType")
+    * @Route("/starsType", name = "app_starsType")
     */
 
-    public function starsType($type, StarsRepository $repository): Response {
+    public function starsType(StarsRepository $repository): Response {
 
         $stars = $repository->findAll();
 

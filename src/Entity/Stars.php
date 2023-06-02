@@ -12,13 +12,18 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=StarsRepository::class)
- * @UniqueEntity(
- * fields={"title"},
- * message="Une étoile ayant ce nom a déjà été créée"
- * )
  */
-class Stars
-{
+
+class Stars {
+    // * @UniqueEntity(
+    // * fields={"title"},
+    // * message="Une étoile ayant ce nom a déjà été créée"
+    // * )
+    
+
+    // -------------------------------- Properties ----------------------------------
+
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -27,131 +32,120 @@ class Stars
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank()
-     * @Assert\Length(min=3,max=255,minMessage="Ce champs doit contenir au mois 4 caractères",maxMessage="Ce champ ne doit pas excéder 255 caractères")
-     */
+    * @ORM\Column(type="string", length=255)
+    * @Assert\NotBlank()
+    * @Assert\Length(min=3,max=255,minMessage="Ce champs doit contenir au mois 4 caractères",maxMessage="Ce champ ne doit pas excéder 255 caractères")
+    */
     private $title;
 
     /**
-     * @ORM\Column(type="integer")
-     * @Assert\NotBlank()
-     * @Assert\Positive()
-     */
+    * @ORM\Column(type="integer")
+    * @Assert\NotBlank()
+    * @Assert\Positive()
+    */
     private $distance;
 
     /**
-     * @ORM\Column(type="text")
-     * @Assert\NotBlank()
-     * @Assert\Length(
-     *      min = 20,
-     *      max = 500,
-     *      minMessage = "La description ne peut pas être inférieur à 20 caractères",
-     *      maxMessage = "La description ne peut pas excéder 500 caractères",
-     *      allowEmptyString = false
-     * )
-
-     * )
-     */
+    * @ORM\Column(type="text")
+    * @Assert\NotBlank()
+    * @Assert\Length(
+    *      min = 20,
+    *      max = 500,
+    *      minMessage = "La description ne peut pas être inférieur à 20 caractères",
+    *      maxMessage = "La description ne peut pas excéder 500 caractères",
+    *      allowEmptyString = false
+    * )
+    * )
+    */
     private $smallDescription;
+    
 
     /**
-     * @ORM\Column(type="text")
-     * @Assert\NotBlank()
-     * @Assert\Length(
-     *      min = 100,
-     *      max = 10000,
-     *      minMessage = "La description ne peut pas être inférieur à 100 caractères",
-     *      maxMessage = "La description ne peut pas excéder 10000 caractères",
-     *      allowEmptyString = false
-     * )
-
-     */
+    * @ORM\Column(type="text")
+    * @Assert\NotBlank()
+    * @Assert\Length(
+    *      min = 100,
+    *      max = 10000,
+    *      minMessage = "La description ne peut pas être inférieur à 100 caractères",
+    *      maxMessage = "La description ne peut pas excéder 10000 caractères",
+    *      allowEmptyString = false
+    * )
+    */
     private $description;
+    
 
     /**
-     * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank()
-     * @Assert\Length(
-     *      min = 10,
-     *      max = 255,
-     *      minMessage = "Ce champ ne peut pas être inférieur à 10 caractères",
-     *      maxMessage = "Ce champ ne peut pas excéder 255 caractères",
-     *      allowEmptyString = false
-     * )
-
-     */
+    * @ORM\Column(type="string", length=255)
+    * @Assert\NotBlank()
+    * @Assert\Length(
+    *      min = 10,
+    *      max = 255,
+    *      minMessage = "Ce champ ne peut pas être inférieur à 10 caractères",
+    *      maxMessage = "Ce champ ne peut pas excéder 255 caractères",
+    *      allowEmptyString = false
+    * )
+    */
     private $image;
+    
 
     /**
-     * @ORM\Column(type="integer")
-     * @Assert\NotBlank()
-     * @Assert\Positive()
-
-     */
+    * @ORM\Column(type="integer")
+    * @Assert\NotBlank()
+    * @Assert\Positive()
+    */
     private $size;
 
     /**
-     * @ORM\Column(type="integer")
-     * @Assert\NotBlank()
-     * @Assert\PositiveOrZero()
-
-     */
+    * @ORM\Column(type="integer")
+    * @Assert\PositiveOrZero()
+    */
     private $planetsNumber;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank()
-     * @Assert\Length(
-     *      min = 3,
-     *      max = 255,
-     *      minMessage = "Ce champ ne peut pas être inférieur à 10 caractères",
-     *      maxMessage = "Ce champ ne peut pas excéder 255 caractères",
-     *      allowEmptyString = false
-     * )
-
-     */
+    * @ORM\Column(type="string", length=255)
+    * @Assert\NotBlank()
+    * @Assert\Length(
+    *      min = 3,
+    *      max = 255,
+    *      minMessage = "Ce champ ne peut pas être inférieur à 10 caractères",
+    *      maxMessage = "Ce champ ne peut pas excéder 255 caractères",
+    *      allowEmptyString = false
+    * )
+    */
     private $constellation;
 
     /**
-     * @ORM\Column(type="bigint")
-     * @Assert\NotBlank()
-     * @Assert\PositiveOrZero()
-
-     */
+    * @ORM\Column(type="bigint")
+    * @Assert\NotBlank()
+    * @Assert\PositiveOrZero()
+    */
     private $price;
 
     /**
-     * @ORM\Column(type="float", nullable=true)
-     * @Assert\PositiveOrZero()
-
-     */
+    * @ORM\Column(type="float", nullable=true)
+    * @Assert\PositiveOrZero()
+    */
     private $discount;
 
     /**
-     * @ORM\OneToMany(targetEntity=Images::class, mappedBy="starsID")
-     * @Assert\NotBlank()
-     * @Assert\Length(
-     *      min = 10,
-     *      max = 255,
-     *      minMessage = "Ce champ ne peut pas être inférieur à 10 caractères",
-     *      maxMessage = "Ce champ ne peut pas excéder 255 caractères",
-     *      allowEmptyString = false
-     * )
-     */
+    * @ORM\OneToMany(targetEntity=Images::class, mappedBy="starsID")
+    * 
+    */
     private $images;
 
     /**
-     * @ORM\OneToMany(targetEntity=Images::class, mappedBy="starsID", orphanRemoval=true)
-     * @Assert\NotBlank()
-     * @Assert\Length(min=3,max=255,minMessage="Ce champs doit contenir au mois 4 caractères",maxMessage="Ce champ ne doit pas excéder 255 caractères")
-     */
+    * @ORM\OneToMany(targetEntity=Images::class, mappedBy="starsID", orphanRemoval=true)
+    */
     private $caption;
 
     /**
      * @ORM\OneToMany(targetEntity=Images::class, mappedBy="starsID")
      */
     private $otherImages;
+
+
+    // -------------------------------- Methods ----------------------------------
+
 
     public function __construct()
     {

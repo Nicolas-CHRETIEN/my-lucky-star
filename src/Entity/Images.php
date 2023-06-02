@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\ImagesRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=ImagesRepository::class)
@@ -11,26 +13,35 @@ use Doctrine\ORM\Mapping as ORM;
 class Images
 {
     /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
+    * @ORM\Id
+    * @ORM\GeneratedValue
+    * @ORM\Column(type="integer")
+    */
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
+    * @ORM\Column(type="string", length=255)
+    * @Assert\NotBlank()
+    * @Assert\Length(
+    *      min = 4,
+    *      max = 255,
+    *      minMessage = "Ce champ ne peut pas être inférieur à 5 caractères",
+    *      maxMessage = "Ce champ ne peut pas excéder 255 caractères"
+    * )
+    */
     private $url;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
+    * @ORM\Column(type="string", length=255)
+    * @Assert\NotBlank()
+    * @Assert\Length(min=3,max=255,minMessage="Ce champs doit contenir au mois 4 caractères",maxMessage="Ce champ ne doit pas excéder 255 caractères")
+    */
     private $caption;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Stars::class, inversedBy="otherImages")
-     * @ORM\JoinColumn(nullable=false)
-     */
+    * @ORM\ManyToOne(targetEntity=Stars::class, inversedBy="otherImages")
+    * @ORM\JoinColumn(nullable=false)
+    */
     private $starsID;
 
     public function getId(): ?int

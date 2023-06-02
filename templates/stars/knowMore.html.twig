@@ -4,7 +4,7 @@
 
 {% block body %}
     <div class="d-flex flex-row-reverse">
-        <a class="btn btn-secondary ms-auto" href="{{star.title}}/edit">Modifier</a>
+        <a class="btn btn-secondary ms-auto" href="{{star.id}}/edit">Modifier</a>
     </div>
     <main class="container mt-5">
         <h1 class="mt-5 mb-8 text-center">{{star.title}}</h1>
@@ -23,7 +23,7 @@
             <div id="carouselExample" class="carousel slide w-50">
                 <div class="carousel-inner">
                     {% for otherImage in star.otherimages %}
-                        <div class="carousel-item active">
+                        <div class="carousel-item {% if loop.first %} active {% endif %}">
                             <img src={{otherImage.url}} class="d-block image image_stars w-100" alt="image"{{star.title}}>
                         </div>
                     {% endfor %}
@@ -45,7 +45,7 @@
                 <p class="text-success  mb-0">{{star.price * (1 - star.discount / 100)}} €</p>
                 <p class="text-secondary mb-6">Soit une réduction de {{star.discount}} % </p>
             {% endif %}
-            <a href="/stars/{{star.title}}" class="btn btn-warning mb-4">Acheter</a>
+            <a href="/stars/{{star.id}}" class="btn btn-warning mb-4">Acheter</a>
         </div>
     </main>
 
