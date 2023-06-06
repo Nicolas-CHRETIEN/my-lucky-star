@@ -5,74 +5,54 @@
 {% form_theme form _self %}
 
 {% block body %}
+
     {# form_start and end ar the commands to create the form on twig. #}
     {# It's also possible to show it only with {{ form(form) }} #}
     {{ form_start(form) }}
 
         {# To change something in the form I need to write between start and end: #}
         <div class="container mt-5 mb-5">
-
             <h1> Ajouter une nouvelle étoile à vendre</h1>
-
             {% include '/stars/_starForm.html.twig' %}
-
             <button type="submit" class="btn btn-warning mb-3">Créer nouvelle étoile</button>
-
         </div>
-
-
-
-
-
-
     {{ form_end(form) }}
-    
-
 {% endblock %}
 
 
 {% block _create_star_otherImages_widget %}
-
     <input type="hidden" id="widget-count" value="0">
-
     <button type="button" class="addImage btn btn-primary mb-3">Ajouter une image</button>
-
     {{ form_widget(form, {'attr': {'class': 'form-control mb-4'}}) }}
-
 {% endblock %}
 
 
 {% block _create_star_otherImages_entry_row %}
-
     {{ form_widget(form) }}
-
 {% endblock %}
 
 
 {# Create a specific block to modifiate the otherImages widget: #}
 {% block _create_star_otherImages_entry_widget %}
-
     <div class="d-flex justify-content-around" id="block_{{id}}">
-
         <div class="form-add-picture-field ms-5">
-        {{ form_label(form.url, 'Adresse URL') }}
-        {{ form_widget(form.url, {'attr': {'class': 'form-control mb-4'}}) }}
+            {{ form_label(form.url, 'Adresse URL') }}
+            {{ form_widget(form.url, {'attr': {'class': 'form-control mb-4'}}) }}
         </div>
         <div class="form-add-picture-field ms-5">
-        {{ form_label(form.caption, 'Titre de l\'image') }}
-        {{ form_widget(form.caption, {'attr': {'class': 'form-control mb-4'}}) }}
+            {{ form_label(form.caption, 'Titre de l\'image') }}
+            {{ form_widget(form.caption, {'attr': {'class': 'form-control mb-4'}}) }}
         </div>
         <div class="form-add-picture-field">
             <button type="button" class="btn btn-danger ms-5" data-action="delete" data-target="#block_{{id}}">X</button>
         </div>
     </div>
-
 {% endblock %}
 
 
 
 {% block javascripts %}
-            <script src="../../js/jquery.min.js"></script>
-            <script src="../..//js/star_form/rangeButtonForm.js"> </script>
-            <script src="../..//js/star_form/addImage.js"> </script>
-        {% endblock %}
+    <script src="../../js/jquery.min.js"></script>
+    <script src="../..//js/star_form/rangeButtonForm.js"> </script>
+    <script src="../..//js/star_form/addImage.js"> </script>
+{% endblock %}

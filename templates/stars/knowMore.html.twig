@@ -3,9 +3,12 @@
 {% block title %}Detailed star{% endblock %}
 
 {% block body %}
+    {% if star.author == app.user %}
     <div class="d-flex flex-row-reverse">
         <a class="btn btn-secondary ms-auto" href="{{star.id}}/edit">Modifier</a>
     </div>
+    {% endif %}
+
     <main class="container mt-5">
         <h1 class="mt-5 mb-8 text-center">{{star.title}}</h1>
 

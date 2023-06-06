@@ -143,6 +143,12 @@ class Stars {
      */
     private $otherImages;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="stars")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $Author;
+
 
     // -------------------------------- Methods ----------------------------------
 
@@ -305,6 +311,18 @@ class Stars {
                 $otherImage->setStarsID(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getAuthor(): ?User
+    {
+        return $this->Author;
+    }
+
+    public function setAuthor(?User $Author): self
+    {
+        $this->Author = $Author;
 
         return $this;
     }

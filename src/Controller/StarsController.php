@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 
+use App\Entity\User;
 use App\Entity\Stars;
 use App\Entity\Images;
 use App\Form\ImageType;
@@ -118,6 +119,8 @@ class StarsController extends AbstractController {
 
         // Check if the form is secured.
         if ($form->isSubmitted() && $form->isValid()) {
+            $user = $this->getUser();
+            $star->setAuthor($user);
 
             foreach ($star->getOtherImages() as $image) {
 
@@ -167,6 +170,8 @@ class StarsController extends AbstractController {
 
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $user = $this->getUser();
+            $star->setAuthor($user);
             
             $images = $repository->findBy(["starsID" => $star->getId()],);
             
@@ -218,10 +223,49 @@ class StarsController extends AbstractController {
     // ----------------------- category stars. ---------------------------
     /**
     *
-    * @Route("/starsType", name = "app_starsType")
+    * @Route("/starsType/category", name = "app_category")
     */
 
-    public function starsType(StarsRepository $repository): Response {
+    public function category(StarsRepository $repository): Response {
+
+        $stars = $repository->findAll();
+
+        return $this->render('starsType/category.html.twig', ['stars' => $stars]);
+    }
+
+    // ----------------------- life duration stars. ---------------------------
+    /**
+    *
+    * @Route("/starsType/lifeDuration", name = "app_lifeDuration")
+    */
+
+    public function life_duration(StarsRepository $repository): Response {
+
+        $stars = $repository->findAll();
+
+        return $this->render('starsType/category.html.twig', ['stars' => $stars]);
+    }
+
+    // ----------------------- life end stars. ---------------------------
+    /**
+    *
+    * @Route("/starsType/lifeEnd", name = "app_lifeEnd")
+    */
+
+    public function life_end(StarsRepository $repository): Response {
+
+        $stars = $repository->findAll();
+
+        return $this->render('starsType/category.html.twig', ['stars' => $stars]);
+    }
+
+    // ----------------------- My account. ---------------------------
+    /**
+    *
+    * @Route("/myAccount", name = "app_myAccount")
+    */
+
+    public function my_account(StarsRepository $repository): Response {
 
         $stars = $repository->findAll();
 

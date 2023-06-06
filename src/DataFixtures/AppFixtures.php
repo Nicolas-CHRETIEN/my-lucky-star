@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use Faker\Factory;
+use App\Entity\User;
 use App\Entity\Stars;
 use App\Entity\Images;
 use Cocur\Slugify\Slugify;
@@ -39,9 +40,38 @@ class AppFixtures extends Fixture
 
         $faker = Factory::create('FR-fr');
         $slugify = new Slugify();
+        $users = [];
+        // Create a loop for User class:
+        for ($index1 = 0; $index1 < 25; $index1++) {
+            $user = new User();
+            $already_used_avatars = [];
+            $random_avatar_image = rand(1, 25);
+            if (in_array($random_avatar_image, $already_used_avatars)) {
+                $index1--;
+            } else {
+            $firstname = $faker->firstname;
+            $lastname = $faker->lastname;
+            $user->setFirstname(strtolower($firstname))
+                ->setLastname(strtoupper($lastname))
+                ->setEmail($faker->email)
+                ->setIntroduction($faker->sentence())
+                ->setDescription($faker->paragraph(5))
+                ->setAvatar("/images/avatar/" . $random_avatar_image . ".jpg")
+                ->setSlug(strtolower(mb_substr($firstname, 0, 1) . $lastname))
+                ->setRoles([])
+                ->setPassword(password_hash("password", PASSWORD_DEFAULT))
+                ;
 
-        // Create a loop:
-        for ($index = 0; $index < 60; $index++) {
+                array_push($already_used_avatars, $random_avatar_image);
+                $manager->persist($user);
+                $users[]=$user;
+            }
+        }
+
+
+
+        // Create a loop for Star class:
+        for ($index2 = 0; $index2 < 60; $index2++) {
 
             $Star = new Stars();
             $choosen_color = $color[rand(0, 3)];
@@ -53,7 +83,6 @@ class AppFixtures extends Fixture
             $smallDescription = $faker->paragraph(2);
             $description = $faker->paragraph(12);
             $Star->setTitle($title)
-                ->setSlug($slug)
                 ->setDistance(rand(50, 3000))
                 ->setSmallDescription($smallDescription)
                 ->setDescription($description)
@@ -63,16 +92,17 @@ class AppFixtures extends Fixture
                 ->setConstellation($Constellation[rand(0, 88)])
                 ->setPrice(mt_rand(10005,50000) * 100000)
                 ->setDiscount($discount[mt_rand(0,5)])
+                ->setAuthor($users[rand(0, 24)])
                 ;
 
             // Persist is the first method to be used to enter datas in database. Flush is the second one.
             $manager->persist($Star);
 
-            for ($index2 = 1; $index2 <= mt_rand(2, 5); $index2++) {
+            for ($index3 = 1; $index3 <= mt_rand(2, 5); $index3++) {
                 $image = new Images();
                 $random_secondary_image_number = rand(0, 14);
-                if (in_array($random_secondary_image_number, $already_used_images) === true) {
-                    $index2--;
+                if (in_array($random_secondary_image_number, $already_used_images)) {
+                    $index3--;
                 } else {
                     $image->setUrl($image_generator[$choosen_color][$random_secondary_image_number] . ".jpg")
                             ->setCaption("image " . $title)
