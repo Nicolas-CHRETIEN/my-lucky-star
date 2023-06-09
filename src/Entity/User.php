@@ -9,10 +9,11 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
- * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
+ * @UniqueEntity(fields={"email"}, message="Un compte utilisant cet email a déjà été créé.")
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -41,26 +42,66 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
+    * @Assert\NotBlank()
+    * @Assert\Length(
+    *      min = 2,
+    *      max = 255,
+    *      minMessage = "Ce champ ne peut pas être inférieur à 2 caractères",
+    *      maxMessage = "Ce champ ne peut pas excéder 255 caractères",
+    *      allowEmptyString = false
+    * )
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=255)
+    * @Assert\NotBlank()
+    * @Assert\Length(
+    *      min = 2,
+    *      max = 255,
+    *      minMessage = "Ce champ ne peut pas être inférieur à 2 caractères",
+    *      maxMessage = "Ce champ ne peut pas excéder 255 caractères",
+    *      allowEmptyString = false
+    * )
      */
     private $lastname;
 
     /**
      * @ORM\Column(type="string", length=255)
+    * @Assert\NotBlank()
+    * @Assert\Length(
+    *      min = 10,
+    *      max = 255,
+    *      minMessage = "Ce champ ne peut pas être inférieur à 10 caractères",
+    *      maxMessage = "Ce champ ne peut pas excéder 255 caractères",
+    *      allowEmptyString = false
+    * )
      */
     private $introduction;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+    * @Assert\NotBlank()
+    * @Assert\Length(
+    *      min = 20,
+    *      max = 1000,
+    *      minMessage = "Ce champ ne peut pas être inférieur à 20 caractères",
+    *      maxMessage = "Ce champ ne peut pas excéder 1000 caractères",
+    *      allowEmptyString = false
+    * )
      */
     private $description;
 
     /**
      * @ORM\Column(type="string", length=255)
+    * @Assert\NotBlank()
+    * @Assert\Length(
+    *      min = 3,
+    *      max = 255,
+    *      minMessage = "Ce champ ne peut pas être inférieur à 3 caractères",
+    *      maxMessage = "Ce champ ne peut pas excéder 255 caractères",
+    *      allowEmptyString = false
+    * )
      */
     private $avatar;
 
@@ -74,9 +115,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $stars;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="userId", orphanRemoval=true)
+     */
+    private $comments;
+
     public function __construct()
     {
         $this->stars = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
 
     /**
@@ -278,6 +325,35 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($star->getAuthor() === $this) {
                 $star->setAuthor(null);
+            }
+        }
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Comment>
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setUserId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->comments->removeElement($comment)) {
+            // set the owning side to null (unless already changed)
+            if ($comment->getUserId() === $this) {
+                $comment->setUserId(null);
             }
         }
 

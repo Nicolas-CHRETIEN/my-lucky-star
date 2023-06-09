@@ -6,7 +6,7 @@
 		<div class="collapse navbar-collapse" id="navbarColor02">
 			<ul class="navbar-nav me-auto">
 				<li class="nav-item">
-					<a class="nav-link active" href="{{path('home')}}">Accueil
+					<a class="nav-link active" href="{{path('app_home')}}">Accueil
 						<span class="visually-hidden">(current)</span>
 					</a>
 				</li>
@@ -22,7 +22,7 @@
 				</li>
 				{% if app.user %}
 				<li class="nav-item">
-					<a class="nav-link" href="{{path('app_myAccount')}}">Mon compte</a>
+					<a class="nav-link" href="{{path('app_my_account')}}">Mon compte</a>
 				</li>
 				{% endif %}
 				{% if app.user %}
@@ -35,9 +35,9 @@
 					<div class="dropdown-menu">
 						<a class="dropdown-item" href="{{path('app_category')}}">Les catégories</a>
 						<a class="dropdown-item" href="{{path('app_concept')}}">Le concept</a>
-						<a class="dropdown-item" href="{{path('app_lifeDuration')}}">La durée de vie</a>
+						<a class="dropdown-item" href="{{path('app_life_duration')}}">La durée de vie</a>
 						<div class="dropdown-divider">
-						<a class="dropdown-item" href="{{path('app_lifeEnd')}}">La fin de vie</a>
+						<a class="dropdown-item" href="{{path('app_life_end')}}">La fin de vie</a>
                         </div>
 					</div>
 				</li>

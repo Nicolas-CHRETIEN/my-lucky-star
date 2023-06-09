@@ -11,11 +11,13 @@ use App\Form\CreateStarType;
 use Doctrine\ORM\Mapping\Entity;
 use App\Repository\StarsRepository;
 use App\Repository\ImagesRepository;
+use App\Repository\CommentRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
@@ -34,49 +36,15 @@ class StarsController extends AbstractController {
         $stars = $repository->findAll();
 
         // combine and shuffle the results of two selections.
-
-        // Red dwarfs
-        $redDwarfs = array_merge($repository->findBy(["image" => "/images/stars/image4.jpg"]), $repository->findBy(["image" => "/images/stars/image10.jpg"]));
-        shuffle($redDwarfs);
-
-        // Red giants
-        $redGiants = array_merge($repository->findBy(["image" => "/images/stars/image1.jpg"]), $repository->findBy(["image" => "/images/stars/image5.jpg"]));
-        shuffle($redGiants);
-
-        // Yellow
-        $yellow = array_merge($repository->findBy(["image" => "/images/stars/image2.jpg"]), $repository->findBy(["image" => "/images/stars/image9.jpg"]));
-        shuffle($yellow);
-
-        // blue giants
-        $blueGiants = array_merge($repository->findBy(["image" => "/images/stars/image3.jpg"]), $repository->findBy(["image" => "/images/stars/image7.jpg"]));
-        shuffle($blueGiants);
-
-        // white dwarfs
-        $whiteDwarfs = array_merge($repository->findBy(["image" => "/images/stars/image6.jpg"]), $repository->findBy(["image" => "/images/stars/image8.jpg"]));
-        shuffle($whiteDwarfs);
-
-        return $this->render('stars/index.html.twig', ['stars' => $stars, 'redDwarfs' => $redDwarfs, 'redGiants' => $redGiants, 'yellow' => $yellow, 'blueGiants' => $blueGiants, 'whiteDwarfs' => $whiteDwarfs]);
+        return $this->render('stars/index.html.twig', ['stars' => $stars]);
     }
-
-    // ----------------------- Describe the concept of the site. ---------------------------
-    /**
-    *
-    * @Route("/concept", name = "app_concept")
-    */
-
-    public function concept(StarsRepository $repository): Response {
-
-        $stars = $repository->findAll();
-
-        return $this->render('concept/index.html.twig', ['stars' => $stars]);
-    }
-
 
     // ----------------------- Create a new product (star). ---------------------------
     /**
-     * @Route("/stars/new", name = "star_create")
-     * @return response
-     */
+    * @Route("/stars/new", name = "star_create")
+    * @Security("is_granted('IS_AUTHENTICATED_FULLY')", message="Vous n'avez pas les autorisations requises pour accéder à cette commande.")
+    * @return response
+    */
 
 
     //  Two dependances need two be injected here: Request to add the form datas to the function and objectManager to be able to use $manager for saving the datas.
@@ -155,6 +123,7 @@ class StarsController extends AbstractController {
     /**
     *
     * @Route("/stars/{id}/edit", name="stars_edit")
+    * @Security("is_granted('ROLE_USER') and user == star.getAuthor() or is_granted('ROLE_ADMIN')", message="Vous n'avez pas les autorisations requises pour accéder à cette commande.")
     * @return Response
     */
 
@@ -179,9 +148,6 @@ class StarsController extends AbstractController {
             foreach ($images as $image) {
                 $manager->remove($image);
             }
-            
-            
-
 
             // For each image to add, give it the star id and save.
             foreach ($star->getOtherImages() as $image) {
@@ -201,76 +167,37 @@ class StarsController extends AbstractController {
         return $this->render("stars/edit.html.twig",["form"=> $form->createView(),"star" => $star]);
     }
 
-
-
-
     // ----------------------- Focus on 1 product. ---------------------------
     /**
-     * Use a route with a parameter to send differents informations in function of the name of the route.
-     * @Route("/stars/{id}", name="app_stars_knowmore")
-     * 
-     */
+    * Use a route with a parameter to send differents informations in function of the name of the route.
+    * @Route("/stars/{id}", name="app_stars_knowmore")
+    * 
+    */
 
-     public function knowMore($id, StarsRepository $repository): Response {
+     public function knowMore($id, CommentRepository $comment_repository, StarsRepository $star_repository): Response {
 
         // I select the informations corresponding to the id.
         // Below I use the findOneByX selection. I make id to send the corresponding datas corresponding to the id in the shape of an array.
 
-        $star = $repository->findOneById($id);
-        return $this->render('stars/knowMore.html.twig', ['star' => $star]);
+        $star = $star_repository->findOneById($id);
+        $comments = $comment_repository->findAll();
+        return $this->render('stars/knowMore.html.twig', ['comments' => $comments, 'star' => $star, 'commentToEdit' => 1]);
     }
 
-    // ----------------------- category stars. ---------------------------
+    // ----------------------- Remove product. ---------------------------
     /**
-    *
-    * @Route("/starsType/category", name = "app_category")
+    * @Route("/stars/{id}/remove", name="star_remove")
+    * @Security("is_granted('ROLE_USER') and user == star.getAuthor() or is_granted('ROLE_ADMIN')", message="Vous n'avez pas les autorisations requises pour accéder à cette commande.")
+    * @param Stars $star
+    * @param EntityManagerInterface $manager
+    * @return response
     */
 
-    public function category(StarsRepository $repository): Response {
-
-        $stars = $repository->findAll();
-
-        return $this->render('starsType/category.html.twig', ['stars' => $stars]);
+    public function removeStar(EntityManagerInterface $manager, Stars $star): Response {
+        $manager->remove($star);
+        $manager->flush();
+        $this->addFlash('success', "L'étoile <strong>{$star->getTitle()}</strong> a bien été supprimée.");
+        return $this->redirectToRoute('app_stars');
     }
-
-    // ----------------------- life duration stars. ---------------------------
-    /**
-    *
-    * @Route("/starsType/lifeDuration", name = "app_lifeDuration")
-    */
-
-    public function life_duration(StarsRepository $repository): Response {
-
-        $stars = $repository->findAll();
-
-        return $this->render('starsType/category.html.twig', ['stars' => $stars]);
-    }
-
-    // ----------------------- life end stars. ---------------------------
-    /**
-    *
-    * @Route("/starsType/lifeEnd", name = "app_lifeEnd")
-    */
-
-    public function life_end(StarsRepository $repository): Response {
-
-        $stars = $repository->findAll();
-
-        return $this->render('starsType/category.html.twig', ['stars' => $stars]);
-    }
-
-    // ----------------------- My account. ---------------------------
-    /**
-    *
-    * @Route("/myAccount", name = "app_myAccount")
-    */
-
-    public function my_account(StarsRepository $repository): Response {
-
-        $stars = $repository->findAll();
-
-        return $this->render('starsType/category.html.twig', ['stars' => $stars]);
-    }
-
 
 }

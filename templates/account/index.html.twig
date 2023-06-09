@@ -1,0 +1,89 @@
+{% extends "base.html.twig" %}
+
+
+{% block body %}
+    <main class="container mt-5">
+        <div class="d-flex flex-row justify-content-around">
+            <div class="d-flex flex-wrap mb-4" style="width: 75%;">
+                <div class="d-flex flex-wrap mb-4">
+                    <img class="avatar" src="{{user.avatar}}" alt= "Photo de profil">
+                    <h1 class="mb-3">{{user.firstname}} {{user.lastname}}</h1>
+                </div>
+                <div class="d-flex flex-row justify-content-around mb-5">
+                    <div class="" style="width: 45%;">
+                        <h3 class="mb-4">Informations personnelles:</h3>
+                        <p class="mb-0">Prénom: {{user.firstname}}</p>
+                        <p class="mb-0">Nom: {{user.lastname}}</p>
+                        <p>Email: {{user.email}}</p>
+                        <p>Présentation: {{user.introduction}}</p>
+                        <p>Description: {{user.description}}</p>
+                    </div>
+                    <div class="" style="width: 45%;">
+                        <h3 class="mb-4">Statistiques:</h3>
+                        {% if user.stars|length > 1 %}
+                            <p class="">{{user.firstname}} {{user.lastname}} a créé {{user.stars|length}} annonces.</p>
+                        {% else %}
+                            <p class="">{{user.firstname}} {{user.lastname}} a créé {{user.stars|length}} annonce.</p>
+                        {% endif %}
+                        <p>nombre de messages postés: {{user.comments|length}}</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="width: 20%;">
+                <h3>Autres utilisateurs<h3>
+                <aside class="aside-scrollbar">
+                    {% for person in users %}
+                        <div class="d-flex mb-4">
+                            <img class="avatar2" src="{{person.avatar}}" alt= "Photo de profil">
+                            <a class="fs-6 mb-3" href="{{path('app_account', {'id': person.id})}}">{{person.firstname}} {{person.lastname}}</a>
+                        </div>
+                    {% endfor %}
+                </aside>
+        </div>
+        </div>
+
+        <div>
+            {% if user.stars|length > 1 %}
+                <p class="text-center">Vos annonces:</p>
+            {% else %}
+                <p class="text-center">Votre annonce:</p>
+            {% endif %}
+        </div>
+
+
+        <div class="d-flex flex-wrap justify-content-around">
+            <div id="carouselExample" class="carousel slide w-50">
+                <div class="carousel-inner">
+                    {% for star in app.user.stars %}
+                        <div class="carousel-item {% if loop.first %} active {% endif %}">
+                            <div class="card mb-3" style="width: 100%;">
+                                <img src={{star.image}} class="card-img-top image image_stars" alt="Image de l'étoile">
+                                <div class="card-body d-flex flex-column justify-content-around align-items-center text-center">
+                                    <h5 class="card-title">{{star.title}}</h5>
+                                    <p class="card-text">{{star.title}} est une étoile de la constellation {{star.constellation}} abritant {{star.planetsNumber}} planètes</p>
+                                    {% if star.discount == 0 %}
+                                        <p class="text-primary  mb-6">{{star.price}} €</p>
+                                    {% else %}
+                                        <p class="text-danger  mb-0 text-decoration-line-through">{{star.price}} €</p>
+                                        <p class="text-success  mb-0">{{star.price * (1 - star.discount / 100)}} €</p>
+                                        <p class="text-secondary mb-6">Soit une réduction de {{star.discount}} % </p>
+                                    {% endif %}
+                                    <a href="/stars/{{star.id}}" class="btn btn-primary">Afficher plus</a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
+    </main>
+{% endblock %}

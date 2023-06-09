@@ -149,6 +149,11 @@ class Stars {
      */
     private $Author;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="starId", orphanRemoval=true)
+     */
+    private $comments;
+
 
     // -------------------------------- Methods ----------------------------------
 
@@ -158,6 +163,7 @@ class Stars {
         $this->images = new ArrayCollection();
         $this->caption = new ArrayCollection();
         $this->otherImages = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -323,6 +329,36 @@ class Stars {
     public function setAuthor(?User $Author): self
     {
         $this->Author = $Author;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Comment>
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setStarId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->comments->removeElement($comment)) {
+            // set the owning side to null (unless already changed)
+            if ($comment->getStarId() === $this) {
+                $comment->setStarId(null);
+            }
+        }
 
         return $this;
     }
