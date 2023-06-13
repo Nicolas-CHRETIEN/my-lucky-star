@@ -128,17 +128,6 @@ class Stars {
     private $discount;
 
     /**
-    * @ORM\OneToMany(targetEntity=Images::class, mappedBy="starsID")
-    * 
-    */
-    private $images;
-
-    /**
-    * @ORM\OneToMany(targetEntity=Images::class, mappedBy="starsID", orphanRemoval=true)
-    */
-    private $caption;
-
-    /**
      * @ORM\OneToMany(targetEntity=Images::class, mappedBy="starsID")
      */
     private $otherImages;
@@ -363,3 +352,14 @@ class Stars {
         return $this;
     }
 }
+
+// 
+    //  @ORM\OneToMany(targetEntity=Images::class, mappedBy="starsID")
+    //  
+    // 
+    // private $images;
+
+    // 
+    //  @ORM\OneToMany(targetEntity=Images::class, mappedBy="starsID")
+    // 
+    // private $caption;

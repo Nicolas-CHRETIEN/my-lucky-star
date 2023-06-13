@@ -128,7 +128,6 @@ class StarsController extends AbstractController {
     */
 
     public function edit (Stars $star, Request $request, EntityManagerInterface $manager, ImagesRepository $repository) {
-        
         // Create the form with the CreateStarType class containing the form model I created.
         $form = $this->createForm(CreateStarType::class, $star);
 
@@ -194,6 +193,19 @@ class StarsController extends AbstractController {
     */
 
     public function removeStar(EntityManagerInterface $manager, Stars $star): Response {
+        var_dump("removeStar function ok");
+        // Delete the linked object before deleting the star:
+        $comments = $star->getComments();
+        
+
+        foreach ($comments as $comment) {
+            $Answers = $comment->getAnswers();
+            foreach ($Answers as $answer) {
+                $manager->remove($answer);
+            }
+            $manager->remove($comment);
+        }
+        var_dump("loop ok");
         $manager->remove($star);
         $manager->flush();
         $this->addFlash('success', "L'étoile <strong>{$star->getTitle()}</strong> a bien été supprimée.");

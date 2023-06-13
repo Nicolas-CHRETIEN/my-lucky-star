@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Detailed star comment{% endblock %}
+
+{% block body %}
+    <main class="container mt-5">
+
+        {% include '/comments/_knowMoreContent.html.twig' %}
+        <div class="container mt-5 mb-5">
+            {% for comment in star.comments %} {# Loop to add all the comments. #}
+                {% if target == "comment" and comment != commentTarget %} {# Situation where the user answer to a comment (not to an answer) and this comment is not the targeted one. #}
+                    {% include '/comments/_commentContent.html.twig' with {'comment': comment} %} {# Usual comment content. #}
+                    {% for answer in comment.answers %} {# Loop to add all the answers for this comment. #}
+                        {% include '/comments/_answerContent.html.twig' with {'answer': answer} %} {# Usual answer content. #}
+                    {% endfor %}
+                {% elseif target == "comment" and comment == commentTarget %} {# Situation where the user answer to this comment. Then the form comes just below. #}
+                    {% include '/comments/_commentContent.html.twig' with {'comment': comment} %} {# Usual comment content. #}
+                    {% for answer in comment.answers %} {# Loop to add all the other answers for this comment if they do exist. #}
+                        {% include '/comments/_answerContent.html.twig' with {'answer': answer} %} {# Usual answer content. #}
+                    {% endfor %}
+                    {% include '/comments/_commentForm.html.twig' %} {# Usual comment form content. #}
+                {% else %} {# In this situation, the user answer to an other answer. #}
+                    {% if comment != targetAnswer.comment %} {# In this situation this comment is not the one to contain the targeted answer #}
+                        {% include '/comments/_commentContent.html.twig' with {'comment': comment} %} {# Usual comment content. #}
+                        {% for answer in comment.answers %} {# Loop to add all the answers for this comment. #}
+                            {% include '/comments/_answerContent.html.twig' with {'answer': answer} %} {# Usual answer content. #}
+                        {% endfor %}
+                    {% else %} {# In this situation this comment is the one to contain the targeted answer #}
+                        {% include '/comments/_commentContent.html.twig' with {'comment': comment} %} {# Usual comment content. #}
+                        {% for answerTargetedComment in comment.answers %} {# Loop to add all the other answers for this comment if they do exist. #}
+                            {% if targetAnswer == answerTargetedComment %} {# In this situation this answer is the targeted one. #}
+                                <div class="d-flex flex-column border border-info rounded bg-warning-subtle ms-4">
+                                    <div class="d-flex flex-column justify-content-between">
+                                        <div class="d-flex flex-row">
+                                            <img src={{answerTargetedComment.userId.avatar}} class="avatar2" alt="image de profil de "{{answerTargetedComment.userId.firstname}} {{answerTargetedComment.userId.lastname}}>
+                                            <p class="fw-bold">{{answerTargetedComment.userId.firstname}} {{answerTargetedComment.userId.lastname}}</p>
+                                            <p class="mx-4">Ajouté le : {{answerTargetedComment.date|format_datetime(locale='fr', timezone='Europe/Paris')}}<p>
+                                        </div><br>
+                                    {% if answerTargetedComment.edit %}
+                                        <p class="">Dernière modification : {{answerTargetedComment.edit|format_datetime(locale='fr', timezone='Europe/Paris')}}<p>
+                                    {% endif %}
+                                    <p><strong>{{answerTargetedComment.targetName}}</strong> {{answerTargetedComment.message}}</p>
+                                </div>
+                                {% include '/comments/_commentForm.html.twig' %} {# Usual comment form content. #}
+                            {% else %} {# In this situation this answer is not the targeted one. #}
+                                {% include '/comments/_answerContent.html.twig' with {'answer': answerTargetedComment} %} {# Usual answer content. #}
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+        </div>
+    </main>
+{% endblock %}

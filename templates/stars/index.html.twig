@@ -10,7 +10,10 @@
             {# Loop to show a third that the available stars only. #}
             {% for star in stars %}
                 <div class="card mb-3 mx-1" style="width: 20em;">
+                    <a href="{{path('app_stars_knowmore', {'id': star.id})}}" class="btn btn-primary">
                     <img src={{star.image}} class="card-img-top image image_stars" alt="Image de l'étoile">
+                    </a>
+                    
                     <div class="card-body d-flex flex-column justify-content-around align-items-center text-center">
                         <h5 class="card-title">{{star.title}}</h5>
                         <p class="card-text">{{star.title}} est une étoile de la constellation {{star.constellation}} abritant {{star.planetsNumber}} planètes</p>

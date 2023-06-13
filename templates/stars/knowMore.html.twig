@@ -4,7 +4,66 @@
 
 {% block body %}
     <main class="container mt-5">
-        {% include '/comments/_knowMoreContent.html.twig' %}
+        <h1 class="mt-5 mb-8 text-center">{{star.title}}</h1>
+
+        <img src={{star.image}} class="card-img-top image image_stars" alt="Image de l'étoile">
+        <div class="d-flex flex-row">
+            <div class="d-flex flex-row-reverse me-1">  
+                {% if app.user %}
+                    <a class="btn btn-warning ms-auto" href="{{ path('star_comment', {'id': star.id}) }}">Commenter</a>
+                {% else %}
+                    <a class="btn btn-warning ms-auto" href="{{path('app_login')}}">Commenter</a>
+                {% endif %}
+            </div>
+            
+            {% if is_granted('ROLE_ADMIN') or star.author == app.user %}
+                <div class="d-flex flex-row-reverse me-1">
+                    <a class="btn btn-secondary ms-auto" href="{{ path('stars_edit', {'id': star.id}) }}">Modifier</a>
+                </div>
+                <div class="d-flex flex-row-reverse me-1">
+                    <a class="deleteStarAd btn btn-danger ms-auto" href="{{ path('star_remove', {'id': star.id}) }}" onclick="return confirm('Voulez vous vraiment supprimer cette annonce?')">Supprimer</a>
+                </div>
+            {% endif %}
+        </div>
+        <div class="card-body d-flex flex-column justify-content-around align-items-center text-center">
+            <p class="card-text">{{star.title}} est une étoile de la constellation {{star.constellation}} abritant {{star.planetsNumber}} planètes</p>
+            <p class="card-text">{{star.smallDescription}}</p>
+            <p class="card-text">{{star.description}}</p>
+            <div class="d-flex flex-column align-items-start">
+                <p class="card-text">Distance: {{star.distance}} années lumières de la terre.</p>
+                <p class="card-text">Taille: {{star.size}} fois la taille du soleil.</p>
+                <p class="card-text">Nombre de planètes: {{star.planetsNumber}} planètes potentielement habitables orbitent autour de {{star.title}}.</p>
+                <p class="card-text mb-5">Annonce mise en ligne par {{star.author.firstname}} {{star.author.lastname}}</p>
+            </div>
+
+            <div id="carouselExample" class="carousel slide w-50">
+                <div class="carousel-inner">
+                    {% for otherImage in star.otherimages %}
+                        <div class="carousel-item {% if loop.first %} active {% endif %}">
+                            <img src={{otherImage.url}} class="d-block image image_stars w-100" alt="image"{{star.title}}>
+                        </div>
+                    {% endfor %}
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+
+            {% if star.discount == 0 %}
+                <p class="text-primary">{{star.price}} €</p>
+            {% else %}
+                <p class="text-danger mt-4 mb-0 text-decoration-line-through">{{star.price}} €</p>
+                <p class="text-success  mb-0">{{star.price * (1 - star.discount / 100)}} €</p>
+                <p class="text-secondary mb-6">Soit une réduction de {{star.discount}} % </p>
+            {% endif %}
+            <a href="/stars/{{star.id}}" class="btn btn-warning mb-4">Acheter</a>
+        </div>
+
         <div class="container mt-5 mb-5">
             {% for comment in star.comments %}
                         <div class="d-flex flex-column border border-info rounded bg-warning-subtle">
@@ -32,7 +91,37 @@
                                 <p class="">Dernière modification : {{comment.edit|format_datetime(locale='fr', timezone='Europe/Paris')}}<p>
                             {% endif %}
                             <p>{{comment.message}}</p>
+                            <a class="btn btn-warning" href="{{ path('answer_comment', {'id': star.id, 'commentId': comment.id}) }}"><strong>Répondre</strong></a>
                         </div>
+                        {% for answer in comment.answers %}
+                            <div class="d-flex flex-column border border-info rounded bg-warning-subtle ms-4">
+                                <div class="d-flex flex-row justify-content-between">
+                                    <div class="d-flex flex-row">
+                                        <img src={{answer.userId.avatar}} class="avatar2" alt="image de profil de "{{answer.userId.firstname}} {{answer.userId.lastname}}>
+                                        <p class="fw-bold">{{answer.userId.firstname}} {{answer.userId.lastname}}</p>
+                                        <p class="mx-4">Ajouté le : {{answer.date|format_datetime(locale='fr', timezone='Europe/Paris')}}<p>
+                                    </div>
+                                    <div class="d-flex justify-content-end flex-row-reverse">
+                                        {% if is_granted('ROLE_ADMIN') or answer.userId == app.user %}
+                                            <a class="btn btn-danger" href="{{ path('answer_delete', {'starId': star.id, 'commentId': comment.id, 'answerId': answer.id}) }}"><strong>x</strong></a>
+                                        {% endif %}
+                                        {% if answer.userId == app.user %}
+                                            <a class="btn btn-warning" href="{{ path('answer_edit', {'starId': star.id, 'commentId': comment.id, 'answerId': answer.id}) }}">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                                                </svg>
+                                            </a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                {% if answer.edit %}
+                                    <p class="">Dernière modification : {{answer.edit|format_datetime(locale='fr', timezone='Europe/Paris')}}<p>
+                                {% endif %}
+                                <p><strong>{{answer.targetName}}</strong> {{answer.message}}</p>
+                                <a class="btn btn-warning" href="{{ path('answer_answer', {'starId': star.id, 'commentId': comment.id, 'answerId': answer.id}) }}"><strong>Répondre</strong></a>
+                            </div>
+                        {% endfor %}
             {% endfor %}
         </div>
     </main>

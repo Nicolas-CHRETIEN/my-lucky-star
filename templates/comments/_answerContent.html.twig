@@ -1,0 +1,17 @@
+<div class="d-flex flex-column border border-info rounded bg-warning-subtle ms-4">
+    <div class="d-flex flex-row justify-content-between">
+        <div class="d-flex flex-row">
+            <img src={{answer.userId.avatar}} class="avatar2" alt="image de profil de "{{answer.userId.firstname}} {{answer.userId.lastname}}>
+            <p class="fw-bold">{{answer.userId.firstname}} {{answer.userId.lastname}}</p>
+            <p class="mx-4">Ajouté le : {{answer.date|format_datetime(locale='fr', timezone='Europe/Paris')}}<p>
+        </div>
+        {% if answer.edit %}
+            <p class="">Dernière modification : {{answer.edit|format_datetime(locale='fr', timezone='Europe/Paris')}}<p>
+        {% endif %}
+        {% if answer.target == "comment" %}
+            <p><strong>{{comment.userId.firstname}} {{comment.userId.lastname}}</strong> {{answer.message}}</p>
+        {% else %}
+            <p><strong>{{targetAnswer.userId.firstname}} {{targetAnswer.userId.lastname}}</strong> {{answer.message}}</p>
+        {% endif %}
+    </div>
+</div>

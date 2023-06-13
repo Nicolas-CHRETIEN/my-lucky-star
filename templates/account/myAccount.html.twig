@@ -12,7 +12,7 @@
                 </div>
                 {% set index = 0 %}
                 {% for star in app.user.stars %}
-                        {% if star.comments|last.userId != app.user %} {# Check if the las com for the star is mine or if I still have to answer #}
+                        {% if star.comments|last.userId != app.user and star.comments|last.answers == null %} {# Check if the las com for the star is mine or if I still have to answer #}
                             {% set index = index + 1 %}
                         {% endif %}
                 {% endfor %}
