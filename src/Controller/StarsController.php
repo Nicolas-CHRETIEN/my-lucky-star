@@ -13,6 +13,7 @@ use App\Repository\StarsRepository;
 use App\Repository\ImagesRepository;
 use App\Repository\CommentRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Common\Collections\Criteria;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -25,18 +26,112 @@ class StarsController extends AbstractController {
 
     // ----------------------- Select the datas from the DB and pass them to the products page. ---------------------------
     /**
-     * @Route("/stars", name="app_stars")
+     * @Route("/page/{page}/filter/{filter}/stars", name="app_stars")
      */
 
-    public function index(StarsRepository $repository): Response {
+    public function index($page, $filter, StarsRepository $star_repository): Response {
 
         // Add the repository in argument of the function is the same than if we use the get repository method to select datas from Stars class:
         // $repository = $this->getDoctrine()->getRepository(Stars::class);
+        
+        
+        if ($filter == "red" || $filter == "yellow" || $filter == "white" || $filter == "blue") {
+            $allStars = $star_repository->findBy(['image' => ['/images/stars/' . $filter . '/image1.jpg',
+                                                            '/images/stars/' . $filter . '/image2.jpg',
+                                                            '/images/stars/' . $filter . '/image3.jpg',
+                                                            '/images/stars/' . $filter . '/image4.jpg',
+                                                            '/images/stars/' . $filter . '/image5.jpg',
+                                                            '/images/stars/' . $filter . '/image6.jpg',
+                                                            '/images/stars/' . $filter . '/image7.jpg',
+                                                            '/images/stars/' . $filter . '/image8.jpg',
+                                                            '/images/stars/' . $filter . '/image9.jpg',
+                                                            '/images/stars/' . $filter . '/image10.jpg',
+                                                            '/images/stars/' . $filter . '/image11.jpg',
+                                                            '/images/stars/' . $filter . '/image12.jpg',
+                                                            '/images/stars/' . $filter . '/image13.jpg',
+                                                            '/images/stars/' . $filter . '/image14.jpg',
+                                                            '/images/stars/' . $filter . '/image15.jpg'
+                                                            ]]);
+        }elseif ($filter == "20al") {
+            $results = $star_repository->findAll();
+            $distances = [];
+            foreach ($results as $result) {
+                if ($result->getDistance() < 20) {
+                    array_push($distances, $result->getDistance());
+                }
+            }
+            $allStars = $star_repository->findBy(['distance' => $distances]);
+        }elseif ($filter == "100al") {
+            $distances = [];
+            $results = $star_repository->findAll();
+            foreach ($results as $result) {
+                if ($result->getDistance() > 20 && $result->getDistance() < 100) {
+                    array_push($distances, $result->getDistance());
+                }
+            }
+            $allStars = $star_repository->findBy(['distance' => $distances]);
+        }elseif ($filter == "1000al") {
+            $results = $star_repository->findAll();
+            $distances = [];
+            foreach ($results as $result) {
+                if ($result->getDistance() > 100 && $result->getDistance() <= 1000) {
+                    array_push($distances, $result->getDistance());
+                }
+            }
+            $allStars = $star_repository->findBy(['distance' => $distances]);
+        }elseif ($filter == "1001al") {
+            $results = $star_repository->findAll();
+            $distances = [];
+            foreach ($results as $result) {
+                if ($result->getDistance() > 1000) {
+                    array_push($distances, $result->getDistance());
+                }
+            }
+            $allStars = $star_repository->findBy(['distance' => $distances]);
+        }elseif ($filter == "5sun") {
+            $results = $star_repository->findAll();
+            $sizes = [];
+            foreach ($results as $result) {
+                if ($result->getSize() < 5) {
+                    array_push($sizes, $result->getDistance());
+                }
+            }
+            $allStars = $star_repository->findBy(['distance' => $sizes]);
+        }elseif ($filter == "20sun") {
+            $results = $star_repository->findAll();
+            $sizes = [];
+            foreach ($results as $result) {
+                if ($result->getSize() > 5 && $result->getSize() <= 20) {
+                    array_push($sizes, $result->getDistance());
+                }
+            }
+            $allStars = $star_repository->findBy(['distance' => $sizes]);
+        }elseif ($filter == "100sun") {
+            $results = $star_repository->findAll();
+            $sizes = [];
+            foreach ($results as $result) {
+                if ($result->getSize() > 20 && $result->getSize() <= 100) {
+                    array_push($sizes, $result->getDistance());
+                }
+            }
+            $allStars = $star_repository->findBy(['distance' => $sizes]);
+        }elseif ($filter == "101sun") {
+            $results = $star_repository->findAll();
+            $sizes = [];
+            foreach ($results as $result) {
+                if ($result->getSize() > 100) {
+                    array_push($sizes, $result->getDistance());
+                }
+            }
+            $allStars = $star_repository->findBy(['distance' => $sizes]);
+        } else {
+            $allStars = $star_repository->findAll();
+        }
 
-        $stars = $repository->findAll();
+        $stars = array_slice($allStars, 10 * ($page - 1), 10);
 
         // combine and shuffle the results of two selections.
-        return $this->render('stars/index.html.twig', ['stars' => $stars]);
+        return $this->render('stars/index.html.twig', ['stars' => $stars, 'page' => $page, 'allStars' => $allStars, 'filter' => $filter]);
     }
 
     // ----------------------- Create a new product (star). ---------------------------
@@ -193,11 +288,10 @@ class StarsController extends AbstractController {
     */
 
     public function removeStar(EntityManagerInterface $manager, Stars $star): Response {
-        var_dump("removeStar function ok");
-        // Delete the linked object before deleting the star:
-        $comments = $star->getComments();
-        
 
+        // Delete the linked object before deleting the star:
+        // Delete comments and answers:
+        $comments = $star->getComments();
         foreach ($comments as $comment) {
             $Answers = $comment->getAnswers();
             foreach ($Answers as $answer) {
@@ -205,7 +299,13 @@ class StarsController extends AbstractController {
             }
             $manager->remove($comment);
         }
-        var_dump("loop ok");
+
+        // Delete images:
+        $images = $star->getOtherImages();
+        foreach ($images as $image) {
+            $manager->remove($image);
+        }
+
         $manager->remove($star);
         $manager->flush();
         $this->addFlash('success', "L'étoile <strong>{$star->getTitle()}</strong> a bien été supprimée.");

@@ -3,32 +3,100 @@
 {% block title %} stars {% endblock %}
 
 {% block body %}
-    <main class="container">
-        <h1 class="mt-5 mb-8 text-center">Etoiles disponibles</h1>
-        <div class="d-flex flex-wrap justify-content-around">
+    
 
-            {# Loop to show a third that the available stars only. #}
-            {% for star in stars %}
-                <div class="card mb-3 mx-1" style="width: 20em;">
-                    <a href="{{path('app_stars_knowmore', {'id': star.id})}}" class="btn btn-primary">
-                    <img src={{star.image}} class="card-img-top image image_stars" alt="Image de l'étoile">
-                    </a>
-                    
-                    <div class="card-body d-flex flex-column justify-content-around align-items-center text-center">
-                        <h5 class="card-title">{{star.title}}</h5>
-                        <p class="card-text">{{star.title}} est une étoile de la constellation {{star.constellation}} abritant {{star.planetsNumber}} planètes</p>
-                        <p class="card-text">Mise en ligne par {{star.author.firstname}} {{star.author.lastname}}</p>
-                        {% if star.discount == 0 %}
-                        <p class="text-primary  mb-6">{{star.price}} €</p>
-                        {% else %}
-                        <p class="text-danger  mb-0 text-decoration-line-through">{{star.price}} €</p>
-                        <p class="text-success  mb-0">{{star.price * (1 - star.discount / 100)}} €</p>
-                        <p class="text-secondary mb-6">Soit une réduction de {{star.discount}} % </p>
-                        {% endif %}
-                        <a href="{{path('app_stars_knowmore', {'id': star.id})}}" class="btn btn-primary">Afficher plus</a>
+    <main class="container d-flex flex-row">
+        <aside style="width: 20%;">
+            <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle mt-5" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Filtres
+                </button>
+                <ul class="dropdown-menu">
+                    <li><hr class="dropdown-divider"></li>
+                    <li><h3 class="dropdown-header text-primary">Filtres</h3></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="{{ path('app_stars', {'page': 1, 'filter': 0}) }}">Toutes les étoiles</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><h3 class="dropdown-header text-primary">Couleur des étoiles</h3></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="{{ path('app_stars', {'page': 1, 'filter': 'red'}) }}">Etoiles rouges</a></li>
+                    <li><a class="dropdown-item" href="{{ path('app_stars', {'page': 1, 'filter': 'yellow'}) }}">Etoiles jaunes</a></li>
+                    <li><a class="dropdown-item" href="{{ path('app_stars', {'page': 1, 'filter': 'white'}) }}">Etoiles blanches</a></li>
+                    <li><a class="dropdown-item" href="{{ path('app_stars', {'page': 1, 'filter': 'blue'}) }}">Etoiles bleues</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><h3 class="dropdown-header text-primary">Distance des étoiles</h3></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="{{ path('app_stars', {'page': 1, 'filter': '20al'}) }}">Moins de 20 années lumières</a></li>
+                    <li><a class="dropdown-item" href="{{ path('app_stars', {'page': 1, 'filter': '100al'}) }}">De 20 à 100 années lumières</a></li>
+                    <li><a class="dropdown-item" href="{{ path('app_stars', {'page': 1, 'filter': '1000al'}) }}">De 101 à 1000 années lumières</a></li>
+                    <li><a class="dropdown-item" href="{{ path('app_stars', {'page': 1, 'filter': '1001al'}) }}">Plus de 1000 années lumières</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><h3 class="dropdown-header text-primary">Dropdown header</h3></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="{{ path('app_stars', {'page': 1, 'filter': '5sun'}) }}">Moins de 5 fois la taille du soleil</a></li>
+                    <li><a class="dropdown-item" href="{{ path('app_stars', {'page': 1, 'filter': '20sun'}) }}">De 5 à 20 la taille du soleil</a></li>
+                    <li><a class="dropdown-item" href="{{ path('app_stars', {'page': 1, 'filter': '100sun'}) }}">De 21 à 100 la taille du soleil</a></li>
+                    <li><a class="dropdown-item" href="{{ path('app_stars', {'page': 1, 'filter': '101sun'}) }}">Plus de 100 la taille du soleil</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                </ul>
+            </div>
+        </aside>
+
+        <div style="width: 78%;">
+            <h1 class="mt-5 mb-5 text-center">Etoiles disponibles</h1>
+
+            <div class="d-flex flex-wrap justify-content-around">
+                {% for star in stars %}
+                    <div class="card mb-3 mx-1" style="width: 20em;">
+                        <a href="{{ path('app_stars_knowmore', {'id': star.id}) }}" class="btn btn-primary">
+                        <img src={{star.image}} class="card-img-top image image_stars" alt="Image de l'étoile">
+                        </a>
+                        
+                        <div class="card-body d-flex flex-column justify-content-around align-items-center text-center">
+                            <h5 class="card-title">{{star.title}}</h5>
+                            <p class="card-text">{{star.title}} est une étoile de la constellation {{star.constellation}} abritant {{star.planetsNumber}} planètes</p>
+                            <p class="card-text">Mise en ligne par {{star.author.firstname}} {{star.author.lastname}}</p>
+                            {% if star.discount == 0 %}
+                            <p class="text-primary  mb-6">{{star.price}} €</p>
+                            {% else %}
+                            <p class="text-danger  mb-0 text-decoration-line-through">{{star.price}} €</p>
+                            <p class="text-success  mb-0">{{star.price * (1 - star.discount / 100)}} €</p>
+                            <p class="text-secondary mb-6">Soit une réduction de {{star.discount}} % </p>
+                            {% endif %}
+                            <a href="{{ path('app_stars_knowmore', {'id': star.id}) }}" class="btn btn-primary">Afficher plus</a>
+                        </div>
                     </div>
-                </div>
-            {% endfor %}
+                {% endfor %}
+            </div>
+
+
+            
+
+            {# Pagination. #}
+            <nav aria-label="Page navigation example">
+
+                <ul class="pagination d-flex justify-content-center">
+
+                    {% if page < 2 %}
+                        {% set previous = 1 %}
+                    {% else %}
+                        {% set previous = page - 1 %}
+                    {% endif %}
+                    <li class="page-item"><a class="page-link" href="{{ path('app_stars', {'page': previous, 'filter': filter}) }}">Previous</a></li>
+
+                    {% for index in 0..(allStars|length / 10)|round(0, "ceil") %}
+                    <li class="page-item"><a class="page-link" href="{{ path('app_stars', {'page': index + 1, 'filter': filter}) }}">{{ index + 1 }}</a></li>
+                    {% endfor %}
+
+                    
+                    {% if page > ((allStars|length / 10)) %}
+                        {% set next = (allStars|length / 10)|round(0, "ceil") %}
+                    {% else %}
+                        {% set next = page + 1 %}
+                    {% endif %}
+                    <li class="page-item"><a class="page-link" href="{{ path('app_stars', {'page': next, 'filter': filter}) }}">Next</a></li>
+                </ul>
+            </nav>
         </div>
     </main>
 {% endblock %}

@@ -6,6 +6,8 @@ use Faker\Factory;
 use App\Entity\User;
 use App\Entity\Stars;
 use App\Entity\Images;
+use App\Entity\Answers;
+use App\Entity\Comment;
 use Cocur\Slugify\Slugify;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -41,8 +43,9 @@ class AppFixtures extends Fixture
         $faker = Factory::create('FR-fr');
         $slugify = new Slugify();
         $users = [];
+        $images = [];
         // Create a loop for User class:
-        for ($index1 = 0; $index1 < 25; $index1++) {
+        for ($index1 = 0; $index1 < 60; $index1++) {
             $user = new User();
             $already_used_avatars = [];
             $random_avatar_image = rand(1, 25);
@@ -71,7 +74,7 @@ class AppFixtures extends Fixture
 
 
         // Create a loop for Star class:
-        for ($index2 = 0; $index2 < 60; $index2++) {
+        for ($index2 = 0; $index2 < 200; $index2++) {
 
             $Star = new Stars();
             $choosen_color = $color[rand(0, 3)];
@@ -83,12 +86,12 @@ class AppFixtures extends Fixture
             $smallDescription = $faker->paragraph(2);
             $description = $faker->paragraph(12);
             $Star->setTitle($title)
-                ->setDistance(rand(50, 3000))
+                ->setDistance(rand(5, 3000))
                 ->setSmallDescription($smallDescription)
                 ->setDescription($description)
                 ->setImage($choosen_image . ".jpg")
-                ->setSize(rand(1, 24))
-                ->setPlanetsNumber(rand(1, 14))
+                ->setSize(rand(1, 150))
+                ->setPlanetsNumber(rand(1, 20))
                 ->setConstellation($Constellation[rand(0, 88)])
                 ->setPrice(mt_rand(10005,50000) * 100000)
                 ->setDiscount($discount[mt_rand(0,5)])
@@ -97,6 +100,7 @@ class AppFixtures extends Fixture
 
             // Persist is the first method to be used to enter datas in database. Flush is the second one.
             $manager->persist($Star);
+            $stars[]=$Star;
 
             for ($index3 = 1; $index3 <= mt_rand(2, 5); $index3++) {
                 $image = new Images();
@@ -116,6 +120,35 @@ class AppFixtures extends Fixture
 
             
         }
+
+        // Create a loop for Comments class:
+        for ($index4 = 0; $index4 < 500; $index4++) {
+            $comment = new Comment;
+            $comment->setUserId($users[rand(0, (sizeof($users) - 1))])
+                    ->setStarId($stars[rand(0, (sizeof($stars) - 1))])
+                    ->setMessage($faker->sentence(rand(1, 5)))
+                    ->setDate($faker->dateTimeBetween('-100 days', '-50 days'))
+                    ->setEdit($faker->dateTimeBetween('-50 days', '-1 days'))
+                    ;
+            
+            $manager->persist($comment);
+
+            // Create a loop for Answers class:
+            for ($index5 = 0; $index5 < rand(0, 5); $index5++) {
+                $answer = new Answers;
+                $answer->setComment($comment)
+                        ->setUserId($users[rand(0, (sizeof($users) - 1))])
+                        ->setMessage($faker->sentence(rand(1, 5)))
+                        ->setDate($faker->dateTimeBetween('-100 days', '-50 days'))
+                        ->setEdit($faker->dateTimeBetween('-50 days', '-1 days'))
+                        ->setTarget('comment')
+                        ->setTargetName($comment->getUserId()->getFirstname() . " " . $comment->getUserId()->getLastname())
+                        ;
+                $manager->persist($answer);
+            }
+        }
+
+
         //  Flush:  Requests the server to send its currently buffered output to the browser.
         $manager->flush();
     }
