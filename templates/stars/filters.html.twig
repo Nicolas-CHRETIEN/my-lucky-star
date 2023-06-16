@@ -1,0 +1,122 @@
+{% extends 'base.html.twig' %} {# Extends the "base" file witch contains the header, the navbar, the footpage for exemple. #}
+{% block title %}Présentation des étoiles disponibles avec filtres{% endblock %}
+
+{% block body %}
+    
+    <main class="container d-flex flex-row">
+        <aside style="width: 20%;">
+                
+                <div class="list-group">
+                    <h3 class="list-group-item list-group-item-action active fs-6">Filtres</h3>
+                    <a class="list-group-item list-group-item-action" href="{{ path('app_stars', {'page': 1}) }}">Toutes les étoiles</a>
+                    
+                    <h3 class="list-group-item list-group-item-action active fs-6">Couleur des étoiles</h3>
+
+                    <a class="list-group-item list-group-item-action" href="{{ path('app_stars_filter', {'page': 1, 'filter': ('red' in filter) ? filter : filter ~ 'red'}) }}">Etoiles rouges {{ ( 'red' in currentFilters) ? '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check text-success" viewBox="0 0 16 16"><path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/></svg></a>' : '' }}</a>
+                    <a class="list-group-item list-group-item-action" href="{{ path('app_stars_filter', {'page': 1, 'filter': ('yellow' in filter) ? filter : filter ~ 'yellow'}) }}">Etoiles jaunes {{ ( 'yellow' in currentFilters) ? '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check text-success" viewBox="0 0 16 16"><path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/></svg></a>' : '' }}</a>
+                    <a class="list-group-item list-group-item-action" href="{{ path('app_stars_filter', {'page': 1, 'filter': ('white' in filter) ? filter : filter ~ 'white'}) }}">Etoiles blanches {{ ( 'white' in currentFilters) ? '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check text-success" viewBox="0 0 16 16"><path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/></svg></a>' : '' }}</a>
+                    <a class="list-group-item list-group-item-action" href="{{ path('app_stars_filter', {'page': 1, 'filter': ('blue' in filter) ? filter : filter ~ 'blue'}) }}">Etoiles bleues {{ ( 'blue' in currentFilters) ? '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check text-success" viewBox="0 0 16 16"><path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/></svg></a>' : '' }}</a></li>
+                    <h3 class="list-group-item list-group-item-action active fs-6">Taille des étoiles</h3>
+                    <a class="list-group-item list-group-item-action" href="{{ path('app_stars_filter', {'page': 1, 'filter': ('5sun' in filter) ? filter : filter ~ '5sun'}) }}">Moins de 5 fois la taille du soleil {{ ( '5sun' in currentFilters) ? '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check text-success" viewBox="0 0 16 16"><path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/></svg></a>' : '' }}</a>
+                    <a class="list-group-item list-group-item-action" href="{{ path('app_stars_filter', {'page': 1, 'filter': ('20sun' in filter) ? filter : filter ~ '20sun'}) }}">De 5 à 20 la taille du soleil {{ ( '20sun' in currentFilters) ? '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check text-success" viewBox="0 0 16 16"><path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/></svg></a>' : '' }}</a>
+                    <a class="list-group-item list-group-item-action" href="{{ path('app_stars_filter', {'page': 1, 'filter': ('100sun' in filter) ? filter : filter ~ '100sun'}) }}">De 21 à 100 la taille du soleil {{ ( '100sun' in currentFilters) ? '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check text-success" viewBox="0 0 16 16"><path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/></svg></a>' : '' }}</a>
+                    <a class="list-group-item list-group-item-action" href="{{ path('app_stars_filter', {'page': 1, 'filter': ('101sun' in filter) ? filter : filter ~ '101sun'}) }}">Plus de 100 la taille du soleil {{ ( '101sun' in currentFilters) ? '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check text-success" viewBox="0 0 16 16"><path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/></svg></a>' : '' }}</a>
+                    <h3 class="list-group-item list-group-item-action active fs-6">Distance des étoiles</h3>
+                    <a class="list-group-item list-group-item-action" href="{{ path('app_stars_filter', {'page': 1, 'filter': ('20al' in filter) ? filter : filter ~ '20al'}) }}">Moins de 20 années lumières {{ ( '20al' in currentFilters) ? '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check text-success" viewBox="0 0 16 16"><path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/></svg></a>' : '' }}</a>
+                    <a class="list-group-item list-group-item-action" href="{{ path('app_stars_filter', {'page': 1, 'filter': ('100al' in filter) ? filter : filter ~ '100al'}) }}">De 20 à 100 années lumières {{ ( '100al' in currentFilters) ? '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check text-success" viewBox="0 0 16 16"><path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/></svg></a>' : '' }}</a>
+                    <a class="list-group-item list-group-item-action" href="{{ path('app_stars_filter', {'page': 1, 'filter': ('1000al' in filter) ? filter : filter ~ '1000al'}) }}">De 101 à 1000 années lumières {{ ( '1000al' in currentFilters) ? '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check text-success" viewBox="0 0 16 16"><path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/></svg></a>' : '' }}</a>
+                    <a class="list-group-item list-group-item-action" href="{{ path('app_stars_filter', {'page': 1, 'filter': ('1001al' in filter) ? filter : filter ~ '1001al'}) }}">Plus de 1000 années lumières {{ ( '1001al' in currentFilters) ? '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check text-success" viewBox="0 0 16 16"><path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/></svg></a>' : '' }}</a>
+                    <h3 class="list-group-item list-group-item-action active fs-6">Nombre de planètes</h3>
+                    <a class="list-group-item list-group-item-action" href="{{ path('app_stars_filter', {'page': 1, 'filter': ('p5' in filter) ? filter : filter ~ 'p5'}) }}">Moins de 5 planètes {{ ( 'p5' in currentFilters) ? '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check text-success" viewBox="0 0 16 16"><path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/></svg></a>' : '' }}</a>
+                    <a class="list-group-item list-group-item-action" href="{{ path('app_stars_filter', {'page': 1, 'filter': ('p10' in filter) ? filter : filter ~ 'p10'}) }}">De 5 à 10 planètes {{ ( 'p10' in currentFilters) ? '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check text-success" viewBox="0 0 16 16"><path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/></svg></a>' : '' }}</a>
+                    <a class="list-group-item list-group-item-action" href="{{ path('app_stars_filter', {'page': 1, 'filter': ('p15' in filter) ? filter : filter ~ 'p15'}) }}">De 10 à 15 planètes {{ ( 'p15' in currentFilters) ? '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check text-success" viewBox="0 0 16 16"><path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/></svg></a>' : '' }}</a>
+                    <a class="list-group-item list-group-item-action" href="{{ path('app_stars_filter', {'page': 1, 'filter': ('p20' in filter) ? filter : filter ~ 'p20'}) }}">Plus de 15 planètes {{ ( 'p20' in currentFilters) ? '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check text-success" viewBox="0 0 16 16"><path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/></svg></a>' : '' }}</a>
+                    <h3 class="list-group-item list-group-item-action active fs-6">constellation</h3>
+
+                    {% set constellations = {'And': 'Andromède', 'Ant': 'Machine Pneumatique', 'Aps': 'Oiseau de Paradis', 'Aql': 'Aigle', 'Aqr': 'Verseau', 'Ara': 'Autel', 'Ari': 'Bélier', 'Aur': 'Cocher', 'Boo': 'Bouvier', 'Cae': 'Burin', 'Cam': 'Girafe', 'Cap': 'Capricorne', 'Car': 'Carène', 'Cas': 'Cassiopée', 'Cen': 'Centaure', 'Cep': 'Céphée', 'Cet': 'Baleine', 'Cha': 'Caméléon', 'Cir': 'Compas', 'CMa': 'Grand Chien', 'CMi': 'Petit Chien', 'Cnc': 'Cancer', 'Col': 'Colombe', 'Com': 'Chevelure de Bérénice', 'CrA': 'Couronne Australe', 'CrB': 'Couronne Boréale', 'Crt': 'Coupe', 'Cru': 'Croix du Sud', 'Crv': 'Corbeau', 'CVn': 'Chiens de Chasse', 'Cyg': 'Cygne', 'Del': 'Dauphin', 'Dor': 'Dorade', 'Dra': 'Dragon', 'Equ': 'Petit Cheval', 'Eri': 'Eridan', 'For': 'Fourneau', 'Gem': 'Gémeaux', 'Gru': 'Grue', 'Her': 'Hercule', 'Hor': 'Horloge', 'Hya': 'Hydre Femelle', 'Hyi': 'Hydre Mâle', 'Ind': 'Indien', 'Lac': 'Lézard', 'Leo': 'Lion', 'Lep': 'Lièvre', 'Lib': 'Balance', 'LMi': 'Petit Lion', 'Lup': 'Loup', 'Lyn': 'Lynx', 'Lyr': 'Lyre', 'Men': 'Table', 'Mic': 'Microscope', 'Mon': 'Licorne', 'Mus': 'Mouche', 'Nor': 'Règle', 'Oct': 'Octant', 'Oph': 'Ophiuchus', 'Ori': 'Orion', 'Pav': 'Paon', 'Peg': 'Pégase', 'Per': 'Persée', 'Phe': 'Phénix', 'Pic': 'Peintre', 'PsA': 'Poisson Austral', 'Psc': 'Poissons', 'Pup': 'Poupe', 'Pyx': 'Boussole', 'Ret': 'Réticule', 'Scl': 'Sculpteur', 'Sco': 'Scorpion', 'Sct': 'Écu de Sobieski', 'Ser': 'Serpent', 'Sex': 'Sextant', 'Sge': 'Flèche', 'Sgr': 'Sagittaire', 'Tau': 'Taureau', 'Tel': 'Télescope', 'TrA': 'Triangle Austral', 'Tri': 'Triangle', 'Tuc': 'Toucan', 'UMa': 'Grande Ourse', 'UMi': 'Petite Ourse', 'Vel': 'Voiles', 'Vir': 'Vierge', 'Vol': 'Poisson Volant', 'Vul': 'Petit Renard'} %}
+
+                    <div class="dropdown">
+                        <button class="list-group-item list-group-item-action dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            {{ ('filterConstellation' in currentFilters|keys) ? constellations[currentFilters.filterConstellation] : 'Constellation'}}
+                        </button>
+                        <ul class="dropdown-menu">
+                            {% for key,value in constellations %}
+                                <li><a class="dropdown-item" href="{{ path('app_stars_filter', {'page': 1, 'filter':  key}) }}">{{ value }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <h3 class="list-group-item list-group-item-action active fs-6">Prix</h3>
+                    <a class="list-group-item list-group-item-action" href="{{ path('app_stars_filter', {'page': 1, 'filter': ('1M' in filter) ? filter : filter ~ '1M'}) }}">Moins 1 milliard {{ ( '1M' in currentFilters) ? '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check text-success" viewBox="0 0 16 16"><path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/></svg></a>' : '' }}</a>
+                    <a class="list-group-item list-group-item-action" href="{{ path('app_stars_filter', {'page': 1, 'filter': ('2M' in filter) ? filter : filter ~ '2M'}) }}">De 1 à 2 milliards {{ ( '2M' in currentFilters) ? '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check text-success" viewBox="0 0 16 16"><path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/></svg></a>' : '' }}</a>
+                    <a class="list-group-item list-group-item-action" href="{{ path('app_stars_filter', {'page': 1, 'filter': ('4M' in filter) ? filter : filter ~ '4M'}) }}">De 2 à 4 milliards {{ ( '4M' in currentFilters) ? '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check text-success" viewBox="0 0 16 16"><path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/></svg></a>' : '' }}</a>
+                    <a class="list-group-item list-group-item-action" href="{{ path('app_stars_filter', {'page': 1, 'filter': ('5M' in filter) ? filter : filter ~ '5M'}) }}">Plus de 4 milliards {{ ( '5M' in currentFilters) ? '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check text-success" viewBox="0 0 16 16"><path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/></svg></a>' : '' }}</a>
+                    <h3 class="list-group-item list-group-item-action active fs-6">Réduction</h3>
+                    <a class="list-group-item list-group-item-action" href="{{ path('app_stars_filter', {'page': 1, 'filter': ('D10' in filter) ? filter : filter ~ 'D10'}) }}">10% {{ ( 'D10' in currentFilters) ? '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check text-success" viewBox="0 0 16 16"><path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/></svg></a>' : '' }}</a>
+                    <a class="list-group-item list-group-item-action" href="{{ path('app_stars_filter', {'page': 1, 'filter': ('D20' in filter) ? filter : filter ~ 'D20'}) }}">20% {{ ( 'D20' in currentFilters) ? '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check text-success" viewBox="0 0 16 16"><path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/></svg></a>' : '' }}</a>
+                    <a class="list-group-item list-group-item-action" href="{{ path('app_stars_filter', {'page': 1, 'filter': ('D30' in filter) ? filter : filter ~ 'D30'}) }}">30% {{ ( 'D30' in currentFilters) ? '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check text-success" viewBox="0 0 16 16"><path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/></svg></a>' : '' }}</a>
+                    <a class="list-group-item list-group-item-action" href="{{ path('app_stars_filter', {'page': 1, 'filter': ('D50' in filter) ? filter : filter ~ 'D50'}) }}">50% {{ ( 'D50' in currentFilters) ? '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check text-success" viewBox="0 0 16 16"><path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/></svg></a>' : '' }}</a>
+                </div>
+        </aside>
+
+        <div style="width: 78%;">
+            <h1 class="mt-5 mb-5 text-center">Etoiles disponibles</h1>
+
+            <div class="d-flex flex-wrap justify-content-around">
+                {% for star in stars %}
+                    <div class="card mb-3 mx-1" style="width: 20em;">
+                        <a href="{{ path('app_stars_knowmore', {'id': star.id}) }}" class="btn btn-primary">
+                        <img src={{star.image}} class="card-img-top image image_stars" alt="Image de l'étoile">
+                        </a>
+                        
+                        <div class="card-body d-flex flex-column justify-content-around align-items-center text-center">
+                            <h5 class="card-title">{{star.title}}</h5>
+                            <p class="card-text">{{star.title}} est une étoile de la constellation {{star.constellation}} abritant {{star.planetsNumber}} planètes</p>
+                            <p class="card-text">Mise en ligne par {{star.author.firstname}} {{star.author.lastname}}</p>
+                            {% if star.discount == 0 %}
+                            <p class="text-primary  mb-6">{{star.price}} €</p>
+                            {% else %}
+                            <p class="text-danger  mb-0 text-decoration-line-through">{{star.price}} €</p>
+                            <p class="text-success  mb-0">{{star.price * (1 - star.discount / 100)}} €</p>
+                            <p class="text-secondary mb-6">Soit une réduction de {{star.discount}} % </p>
+                            {% endif %}
+                            <a href="{{ path('app_stars_knowmore', {'id': star.id}) }}" class="btn btn-primary">Afficher plus</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+
+            
+
+            {# Pagination. #}
+            <nav aria-label="Page navigation example">
+
+                <ul class="pagination d-flex justify-content-center">
+
+                    {% if page < 2 %}
+                        {% set previous = 1 %}
+                    {% else %}
+                        {% set previous = page - 1 %}
+                    {% endif %}
+                    <li class="page-item"><a class="page-link" href="{{ path('app_stars', {'page': previous}) }}">Previous</a></li>
+
+                    {% for index in 0..(allstars|length / 10)|round(0, "ceil") %}
+                        {% if index + 1 == page %}
+                            <li class="page-item text-decoration-underline"><a class="page-link" href="{{ path('app_stars', {'page': index + 1}) }}">{{ index + 1 }}</a></li>
+                        {% else %}
+                            <li class="page-item"><a class="page-link" href="{{ path('app_stars', {'page': index + 1}) }}">{{ index + 1 }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+
+                    
+                    {% if page > ((allstars|length / 10)) %}
+                        {% set next = (allstars|length / 10)|round(0, "ceil") %}
+                    {% else %}
+                        {% set next = page + 1 %}
+                    {% endif %}
+                    <li class="page-item"><a class="page-link" href="{{ path('app_stars', {'page': next}) }}">Next</a></li>
+                </ul>
+            </nav>
+        </div>
+    </main>
+{% endblock %}

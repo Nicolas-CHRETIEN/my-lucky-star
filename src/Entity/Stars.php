@@ -143,6 +143,42 @@ class Stars {
      */
     private $comments;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $filterColor;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $filterSize;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $filterDistance;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $filterPlanetsNumber;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $filterConstellation;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $filterPrice;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $filterDiscount;
+
+
 
     // -------------------------------- Methods ----------------------------------
 
@@ -351,6 +387,91 @@ class Stars {
 
         return $this;
     }
+
+    public function getFilterColor(): ?string
+    {
+        return $this->filterColor;
+    }
+
+    public function setFilterColor(string $filterColor): self
+    {
+        $this->filterColor = $filterColor;
+
+        return $this;
+    }
+
+    public function getFilterSize(): ?string
+    {
+        return $this->filterSize;
+    }
+
+    public function setFilterSize(string $filterSize): self
+    {
+        $this->filterSize = $filterSize;
+
+        return $this;
+    }
+
+    public function getFilterDistance(): ?string
+    {
+        return $this->filterDistance;
+    }
+
+    public function setFilterDistance(string $filterDistance): self
+    {
+        $this->filterDistance = $filterDistance;
+
+        return $this;
+    }
+
+    public function getFilterPlanetsNumber(): ?string
+    {
+        return $this->filterPlanetsNumber;
+    }
+
+    public function setFilterPlanetsNumber(string $filterPlanetsNumber): self
+    {
+        $this->filterPlanetsNumber = $filterPlanetsNumber;
+
+        return $this;
+    }
+
+    public function getFilterConstellation(): ?string
+    {
+        return $this->filterConstellation;
+    }
+
+    public function setFilterConstellation(string $filterConstellation): self
+    {
+        $this->filterConstellation = $filterConstellation;
+
+        return $this;
+    }
+
+    public function getFilterPrice(): ?string
+    {
+        return $this->filterPrice;
+    }
+
+    public function setFilterPrice(string $filterPrice): self
+    {
+        $this->filterPrice = $filterPrice;
+
+        return $this;
+    }
+
+    public function getFilterDiscount(): ?string
+    {
+        return $this->filterDiscount;
+    }
+
+    public function setFilterDiscount(string $filterDiscount): self
+    {
+        $this->filterDiscount = $filterDiscount;
+
+        return $this;
+    }
+
 }
 
 // 

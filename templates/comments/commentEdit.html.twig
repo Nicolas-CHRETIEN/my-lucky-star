@@ -1,34 +1,15 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}Detailed star comment{% endblock %}
+{% extends 'base.html.twig' %} {# Extends the "base" file witch contains the header, the navbar, the footpage for exemple. #}
+{% block title %}Modifier un commentaire{% endblock %}
 
 {% block body %}
     <main class="container mt-5">
-
-        {% include '/comments/_knowMoreContent.html.twig' %}
-
+        {% include '/comments/_knowMoreContent.html.twig' %} {# Part of the presentation of the star page wicth does not concern the comments. #}
         <div class="container mt-5 mb-5">
-            {% for comment in star.comments %}
-                    {% if commentToEdit == null or comment != commentToEdit %}
-                        <div class="d-flex flex-column border border-info rounded bg-warning-subtle">
-                            <div class="d-flex flex-row justify-content-between">
-                                <div class="d-flex flex-row">
-                                    <img class="avatar2" src={{comment.userId.avatar}} alt="image de profil de "{{comment.userId.firstname}} {{comment.userId.lastname}}>
-                                    <p class="fw-bold">{{comment.userId.firstname}} {{comment.userId.lastname}}</p>
-                                </div>
-                            </div>
-                            <p>{{comment.message}}</p>
-                        </div>
+            {% for comment in star.comments %}  {# Add the other comments. #}
+                    {% if commentToEdit == null or comment != commentToEdit %} {# Add the other comments and replace the targeted one with the edit form. #}
+                        {% include '/comments/_commentContent.html.twig' with {'comment': comment} %} {# Usual comment content. #}
                     {% else %}
-                        <div class="container mt-5 mb-5">
-                            {{ form_start(form) }}
-                                <div class="form-group">
-                                    {{ form_label(form.message, 'Ajouter un commentaire') }}
-                                    {{ form_widget(form.message, {'attr': {'class': 'form-control mb-4', 'cols': 50, 'rows': 10, 'required': 'required'}}) }}
-                                    <button type="submit" class="btn btn-warning mb-3">Modifier</button>
-                                </div>
-                            {{ form_end(form) }}
-                        </div>
+                        {% include '/comments/_commentForm.html.twig' %} {# Usual comment form content. #}
                     {% endif %}
             {% endfor %}
         </div>

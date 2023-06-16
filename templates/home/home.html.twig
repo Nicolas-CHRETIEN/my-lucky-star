@@ -1,13 +1,12 @@
-{% extends "base.html.twig" %}
-
+{% extends "base.html.twig" %} {# Extends the "base" file witch contains the header, the navbar, the footpage for exemple. #}
+{% block title %}Page d'accueil{% endblock %}
 
 {% block body %}
     <main class="container mt-5">    
         <h1>My Lucky Star</h1> <br> <br>
         <p>Les étoiles sont d'immenses corps célestes composés principalement d'hydrogène et d'hélium, la lumière et la chaleur qu'elles produisent proviennent des réactions nucléaires qui se déroulent en son centre. Exception faite de notre soleil, les points lumineux révélés par la nuit dans le ciel sont tous situés à des années-lumière de la Terre. Ils sont la pierre angulaire des galaxies et l'univers en compte des milliards. Il est impossible de connaître le nombre exact d'étoiles, mais les astronomes estiment qu'il y en aurait environ 300 milliards dans notre galaxie, la Voie lactée.</p> <br> <br>
         <div class="d-flex justify-content-around">
-
-            <div class="card mb-3 w-30 mx-1 ">
+            <div class="card mb-3 w-30 mx-1 "> {# Presentation of the universe. #}
                 <h3 class="card-header text-bg-dark p-3">L'univers</h3>
                 <div class="card-body">
                     <h5 class="card-title">Contient les galaxies</h5>
@@ -22,8 +21,7 @@
                     <a href="{{path('app_universe')}}" class="card-link">En savoir plus</a>
                 </div>
             </div>
-
-            <div class="card mb-3 w-30 mx-1">
+            <div class="card mb-3 w-30 mx-1"> {# Presentation of the galaxies. #}
                 <h3 class="card-header text-bg-dark p-3">Les galaxies</h3>
                 <div class="card-body">
                     <h5 class="card-title">Contiennent les étoiles</h5>
@@ -37,8 +35,7 @@
                     <a href="{{path('app_galaxy')}}" class="card-link">En savoir plus</a>
                 </div>
             </div>
-
-            <div class="card mb-3 w-30 mx-1">
+            <div class="card mb-3 w-30 mx-1"> {# Presentation of the stars and the solar system. #}
                 <h3 class="card-header text-bg-dark p-3">Les étoiles</h3>
                 <div class="card-body">
                     <h5 class="card-title">Attirent autour d'elles des planètes</h5>
@@ -52,7 +49,6 @@
                     <a href="{{path('app_solar_system')}}" class="card-link">En savoir plus</a>
                 </div>
             </div>
-
         </div>
     </main>
 {% endblock %}

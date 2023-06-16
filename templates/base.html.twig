@@ -14,7 +14,7 @@
     </head>
 
     <body>
-        {% include "include/header.html.twig" %}
+        {% include "include/_header.html.twig" %}
 
         {# Add the code to show the flash messages (seen in Forms lesson). #}
         {% for label, messages in app.flashes %}
@@ -30,7 +30,7 @@
         {% block body %}
         {% endblock %}
 
-        {% include "include/footer.html.twig" %}
+        {% include "include/_footer.html.twig" %}
         
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}

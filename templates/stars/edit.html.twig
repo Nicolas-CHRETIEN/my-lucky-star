@@ -1,14 +1,11 @@
-{% extends 'base.html.twig' %}
-
+{% extends 'base.html.twig' %} {# Extends the "base" file witch contains the header, the navbar, the footpage for exemple. #}
 {% block title %}Modification d'une étoile{% endblock %}
 
 {% form_theme form _self %}
-
 {% block body %}
     {# form_start and end ar the commands to create the form on twig. #}
     {# It's also possible to show it only with {{ form(form) }} #}
     {{ form_start(form) }}
-
         {# To change something in the form I need to write between start and end: #}
         <div class="container mt-5 mb-5">
             <h1> Modifier la description de l'étoile</h1>
@@ -19,7 +16,7 @@
 {% endblock %}
 
 
-{% block _create_star_otherImages_widget %}
+{% block _create_star_otherImages_widget %} {# Add several blocks to be able to access to different part of the form with the dom HTML in JS #}
     <input type="hidden" id="widget-count" value="0">
     <button type="button" class="addImage btn btn-primary mb-3">Ajouter une image</button>
     {{ form_widget(form, {'attr': {'class': 'form-control mb-4'}}) }}

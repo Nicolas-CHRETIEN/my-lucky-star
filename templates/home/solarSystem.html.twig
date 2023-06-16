@@ -1,4 +1,5 @@
-{% extends "base.html.twig" %}
+{% extends "base.html.twig" %} {# Extends the "base" file witch contains the header, the navbar, the footpage for exemple. #}
+{% block title %}Informations sur le système solaire{% endblock %}
 
 {% block body %}
     <main class="container mt-5">
@@ -9,16 +10,13 @@
             Pour autant, les planètes gazeuses, telles que Jupiter ou Saturne, possèdent de nombreuses lunes elles aussi susceptibles d'abriter la vie.
             De même, la vie pourrait apparaitre sur l'une des 5 planètes naines actuellement connues dans le système solaire, ou encore sur un astéroïde.
         </p>
-
-
         <p>
             {{"<strong>Reproduction du système solaire:</strong>"}}
         </p>
         <p>
             (attention, les distances ne sont pas à l'échelle).
         </p>
-
-        <canvas id="canvas" class="canvas ms-5 mt-5" height="2000" width="2000"></canvas>
+        <canvas id="canvas" class="canvas ms-5 mt-5" height="2000" width="2000"></canvas> {# frame for the canvas, created with the JS files. #}
     </main>
 {% endblock %}
 {% block javascripts %}

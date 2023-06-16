@@ -1,45 +1,61 @@
-{% extends 'base.html.twig' %}
-
-{% block title %} stars {% endblock %}
+{% extends 'base.html.twig' %} {# Extends the "base" file witch contains the header, the navbar, the footpage for exemple. #}
+{% block title %}Présentation des étoiles disponibles{% endblock %}
 
 {% block body %}
     
-
     <main class="container d-flex flex-row">
         <aside style="width: 20%;">
-            <div class="dropdown">
-                <button class="btn btn-primary dropdown-toggle mt-5" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Filtres
-                </button>
-                <ul class="dropdown-menu">
-                    <li><hr class="dropdown-divider"></li>
-                    <li><h3 class="dropdown-header text-primary">Filtres</h3></li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="{{ path('app_stars', {'page': 1, 'filter': 0}) }}">Toutes les étoiles</a></li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><h3 class="dropdown-header text-primary">Couleur des étoiles</h3></li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="{{ path('app_stars', {'page': 1, 'filter': 'red'}) }}">Etoiles rouges</a></li>
-                    <li><a class="dropdown-item" href="{{ path('app_stars', {'page': 1, 'filter': 'yellow'}) }}">Etoiles jaunes</a></li>
-                    <li><a class="dropdown-item" href="{{ path('app_stars', {'page': 1, 'filter': 'white'}) }}">Etoiles blanches</a></li>
-                    <li><a class="dropdown-item" href="{{ path('app_stars', {'page': 1, 'filter': 'blue'}) }}">Etoiles bleues</a></li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><h3 class="dropdown-header text-primary">Distance des étoiles</h3></li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="{{ path('app_stars', {'page': 1, 'filter': '20al'}) }}">Moins de 20 années lumières</a></li>
-                    <li><a class="dropdown-item" href="{{ path('app_stars', {'page': 1, 'filter': '100al'}) }}">De 20 à 100 années lumières</a></li>
-                    <li><a class="dropdown-item" href="{{ path('app_stars', {'page': 1, 'filter': '1000al'}) }}">De 101 à 1000 années lumières</a></li>
-                    <li><a class="dropdown-item" href="{{ path('app_stars', {'page': 1, 'filter': '1001al'}) }}">Plus de 1000 années lumières</a></li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><h3 class="dropdown-header text-primary">Dropdown header</h3></li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="{{ path('app_stars', {'page': 1, 'filter': '5sun'}) }}">Moins de 5 fois la taille du soleil</a></li>
-                    <li><a class="dropdown-item" href="{{ path('app_stars', {'page': 1, 'filter': '20sun'}) }}">De 5 à 20 la taille du soleil</a></li>
-                    <li><a class="dropdown-item" href="{{ path('app_stars', {'page': 1, 'filter': '100sun'}) }}">De 21 à 100 la taille du soleil</a></li>
-                    <li><a class="dropdown-item" href="{{ path('app_stars', {'page': 1, 'filter': '101sun'}) }}">Plus de 100 la taille du soleil</a></li>
-                    <li><hr class="dropdown-divider"></li>
-                </ul>
-            </div>
+                
+                <div class="list-group">
+                    <h3 class="list-group-item list-group-item-action active fs-6">Filtres</h3>
+                    <a class="list-group-item list-group-item-action" href="{{ path('app_stars', {'page': 1}) }}">Toutes les étoiles <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check text-success" viewBox="0 0 16 16"><path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/></svg></a>
+                    
+                    <h3 class="list-group-item list-group-item-action active fs-6">Couleur des étoiles</h3>
+                    
+                    <a class="list-group-item list-group-item-action" href="{{ path('app_stars_filter', {'page': 1, 'filter': 'red'}) }}">Etoiles rouges</a>
+                    <a class="list-group-item list-group-item-action" href="{{ path('app_stars_filter', {'page': 1, 'filter': 'yellow'}) }}">Etoiles jaunes</a>
+                    <a class="list-group-item list-group-item-action" href="{{ path('app_stars_filter', {'page': 1, 'filter': 'white'}) }}">Etoiles blanches</a>
+                    <a class="list-group-item list-group-item-action" href="{{ path('app_stars_filter', {'page': 1, 'filter': 'blue'}) }}">Etoiles bleues</a></li>
+                    <h3 class="list-group-item list-group-item-action active fs-6">Taille des étoiles</h3>
+                    <a class="list-group-item list-group-item-action" href="{{ path('app_stars_filter', {'page': 1, 'filter': '5sun'}) }}">Moins de 5 fois la taille du soleil</a>
+                    <a class="list-group-item list-group-item-action" href="{{ path('app_stars_filter', {'page': 1, 'filter': '20sun'}) }}">De 5 à 20 la taille du soleil</a>
+                    <a class="list-group-item list-group-item-action" href="{{ path('app_stars_filter', {'page': 1, 'filter': '100sun'}) }}">De 21 à 100 la taille du soleil</a>
+                    <a class="list-group-item list-group-item-action" href="{{ path('app_stars_filter', {'page': 1, 'filter': '101sun'}) }}">Plus de 100 la taille du soleil</a>
+                    <h3 class="list-group-item list-group-item-action active fs-6">Distance des étoiles</h3>
+                    <a class="list-group-item list-group-item-action" href="{{ path('app_stars_filter', {'page': 1, 'filter': '20al'}) }}">Moins de 20 années lumières</a>
+                    <a class="list-group-item list-group-item-action" href="{{ path('app_stars_filter', {'page': 1, 'filter': '100al'}) }}">De 20 à 100 années lumières</a>
+                    <a class="list-group-item list-group-item-action" href="{{ path('app_stars_filter', {'page': 1, 'filter': '1000al'}) }}">De 101 à 1000 années lumières</a>
+                    <a class="list-group-item list-group-item-action" href="{{ path('app_stars_filter', {'page': 1, 'filter': '1001al'}) }}">Plus de 1000 années lumières</a>
+                    <h3 class="list-group-item list-group-item-action active fs-6">Nombre de planètes</h3>
+                    <a class="list-group-item list-group-item-action" href="{{ path('app_stars_filter', {'page': 1, 'filter': 'p5'}) }}">Moins de 5 planètes</a>
+                    <a class="list-group-item list-group-item-action" href="{{ path('app_stars_filter', {'page': 1, 'filter': 'p10'}) }}">De 5 à 10 planètes</a>
+                    <a class="list-group-item list-group-item-action" href="{{ path('app_stars_filter', {'page': 1, 'filter': 'p15'}) }}">De 10 à 15 planètes</a>
+                    <a class="list-group-item list-group-item-action" href="{{ path('app_stars_filter', {'page': 1, 'filter': 'p20'}) }}">Plus de 15 planètes</a>
+                    <h3 class="list-group-item list-group-item-action active fs-6">constellation</h3>
+
+                    {% set constellations = {'And': 'Andromède', 'Ant': 'Machine Pneumatique', 'Aps': 'Oiseau de Paradis', 'Aql': 'Aigle', 'Aqr': 'Verseau', 'Ara': 'Autel', 'Ari': 'Bélier', 'Aur': 'Cocher', 'Boo': 'Bouvier', 'Cae': 'Burin', 'Cam': 'Girafe', 'Cap': 'Capricorne', 'Car': 'Carène', 'Cas': 'Cassiopée', 'Cen': 'Centaure', 'Cep': 'Céphée', 'Cet': 'Baleine', 'Cha': 'Caméléon', 'Cir': 'Compas', 'CMa': 'Grand Chien', 'CMi': 'Petit Chien', 'Cnc': 'Cancer', 'Col': 'Colombe', 'Com': 'Chevelure de Bérénice', 'CrA': 'Couronne Australe', 'CrB': 'Couronne Boréale', 'Crt': 'Coupe', 'Cru': 'Croix du Sud', 'Crv': 'Corbeau', 'CVn': 'Chiens de Chasse', 'Cyg': 'Cygne', 'Del': 'Dauphin', 'Dor': 'Dorade', 'Dra': 'Dragon', 'Equ': 'Petit Cheval', 'Eri': 'Eridan', 'For': 'Fourneau', 'Gem': 'Gémeaux', 'Gru': 'Grue', 'Her': 'Hercule', 'Hor': 'Horloge', 'Hya': 'Hydre Femelle', 'Hyi': 'Hydre Mâle', 'Ind': 'Indien', 'Lac': 'Lézard', 'Leo': 'Lion', 'Lep': 'Lièvre', 'Lib': 'Balance', 'LMi': 'Petit Lion', 'Lup': 'Loup', 'Lyn': 'Lynx', 'Lyr': 'Lyre', 'Men': 'Table', 'Mic': 'Microscope', 'Mon': 'Licorne', 'Mus': 'Mouche', 'Nor': 'Règle', 'Oct': 'Octant', 'Oph': 'Ophiuchus', 'Ori': 'Orion', 'Pav': 'Paon', 'Peg': 'Pégase', 'Per': 'Persée', 'Phe': 'Phénix', 'Pic': 'Peintre', 'PsA': 'Poisson Austral', 'Psc': 'Poissons', 'Pup': 'Poupe', 'Pyx': 'Boussole', 'Ret': 'Réticule', 'Scl': 'Sculpteur', 'Sco': 'Scorpion', 'Sct': 'Écu de Sobieski', 'Ser': 'Serpent', 'Sex': 'Sextant', 'Sge': 'Flèche', 'Sgr': 'Sagittaire', 'Tau': 'Taureau', 'Tel': 'Télescope', 'TrA': 'Triangle Austral', 'Tri': 'Triangle', 'Tuc': 'Toucan', 'UMa': 'Grande Ourse', 'UMi': 'Petite Ourse', 'Vel': 'Voiles', 'Vir': 'Vierge', 'Vol': 'Poisson Volant', 'Vul': 'Petit Renard'} %}
+
+                    <div class="dropdown">
+                        <button class="list-group-item list-group-item-action dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Constellation
+                        </button>
+                        <ul class="dropdown-menu">
+                            {% for key,value in constellations %}
+                                <li><a class="dropdown-item" href="{{ path('app_stars_filter', {'page': 1, 'filter':  key}) }}">{{ value }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <h3 class="list-group-item list-group-item-action active fs-6">Prix</h3>
+                    <a class="list-group-item list-group-item-action" href="{{ path('app_stars_filter', {'page': 1, 'filter': '1M'}) }}">Moins 1 milliard </a>
+                    <a class="list-group-item list-group-item-action" href="{{ path('app_stars_filter', {'page': 1, 'filter': '2M'}) }}">De 1 à 2 milliards</a>
+                    <a class="list-group-item list-group-item-action" href="{{ path('app_stars_filter', {'page': 1, 'filter': '4M'}) }}">De 2 à 4 milliards</a>
+                    <a class="list-group-item list-group-item-action" href="{{ path('app_stars_filter', {'page': 1, 'filter': '5M'}) }}">Plus de 4 milliards</a>
+                    <h3 class="list-group-item list-group-item-action active fs-6">Réduction</h3>
+                    <a class="list-group-item list-group-item-action" href="{{ path('app_stars_filter', {'page': 1, 'filter': 'D10'}) }}">10%</a>
+                    <a class="list-group-item list-group-item-action" href="{{ path('app_stars_filter', {'page': 1, 'filter': 'D20'}) }}">20%</a>
+                    <a class="list-group-item list-group-item-action" href="{{ path('app_stars_filter', {'page': 1, 'filter': 'D30'}) }}">30%</a>
+                    <a class="list-group-item list-group-item-action" href="{{ path('app_stars_filter', {'page': 1, 'filter': 'D50'}) }}">50%</a>
+                </div>
         </aside>
 
         <div style="width: 78%;">
@@ -82,19 +98,23 @@
                     {% else %}
                         {% set previous = page - 1 %}
                     {% endif %}
-                    <li class="page-item"><a class="page-link" href="{{ path('app_stars', {'page': previous, 'filter': filter}) }}">Previous</a></li>
+                    <li class="page-item"><a class="page-link" href="{{ path('app_stars', {'page': previous}) }}">Previous</a></li>
 
-                    {% for index in 0..(allStars|length / 10)|round(0, "ceil") %}
-                    <li class="page-item"><a class="page-link" href="{{ path('app_stars', {'page': index + 1, 'filter': filter}) }}">{{ index + 1 }}</a></li>
+                    {% for index in 0..(allstars|length / 10)|round(0, "ceil") %}
+                        {% if index + 1 == page %}
+                            <li class="page-item text-decoration-underline"><a class="page-link" href="{{ path('app_stars', {'page': index + 1}) }}">{{ index + 1 }}</a></li>
+                        {% else %}
+                            <li class="page-item"><a class="page-link" href="{{ path('app_stars', {'page': index + 1}) }}">{{ index + 1 }}</a></li>
+                        {% endif %}
                     {% endfor %}
 
                     
-                    {% if page > ((allStars|length / 10)) %}
-                        {% set next = (allStars|length / 10)|round(0, "ceil") %}
+                    {% if page > ((allstars|length / 10)) %}
+                        {% set next = (allstars|length / 10)|round(0, "ceil") %}
                     {% else %}
                         {% set next = page + 1 %}
                     {% endif %}
-                    <li class="page-item"><a class="page-link" href="{{ path('app_stars', {'page': next, 'filter': filter}) }}">Next</a></li>
+                    <li class="page-item"><a class="page-link" href="{{ path('app_stars', {'page': next}) }}">Next</a></li>
                 </ul>
             </nav>
         </div>

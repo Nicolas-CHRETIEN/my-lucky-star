@@ -1,56 +1,58 @@
-{% extends "base.html.twig" %}
-
+{% extends "base.html.twig" %} {# Extends the "base" file witch contains the header, the navbar, the footpage for exemple. #}
+{% block title %}Mon compte{% endblock %}
 
 {% block body %}
     <main class="container mt-5 d-flex flex-column">
         <div class="d-flex flex-row">
             <div class="d-flex flex-wrap mb-4" style="width: 100%">
                 <div class="d-flex flex-row mb-4">
-                <div class="d-flex flex-row">
-                    <img class="avatar" src="{{ app.user.avatar }}" alt= "Photo de profil">
-                    <h1 class="mb-3">{{ app.user.firstname }} {{ app.user.lastname }}</h1>
-                </div>
-                {% set index = 0 %}
-                {% for star in app.user.stars %}
-                        {% if star.comments|last.userId != app.user and star.comments|last.answers == null %} {# Check if the las com for the star is mine or if I still have to answer #}
+                    <div class="d-flex flex-row"> {# User's name and picture. #}
+                        <img class="avatar" src="{{ app.user.avatar }}" alt= "Photo de profil">
+                        <h1 class="mb-3">{{ app.user.firstname }} {{ app.user.lastname }}</h1>
+                    </div>
+                    {# Notification for the user if one of his ad is commented. #}
+                    {# {% set index = 0 %}
+                    {% for star in app.user.stars %} #}
+                        {# {% if star.comments|last.userId != app.user and star.comments|last.answers == null %} Check if the last com for the star is mine or if I still have to answer
                             {% set index = index + 1 %}
                         {% endif %}
-                {% endfor %}
-                {% if index > 0 %}
-                    <button class="btn btn-primary ms-5 h-50 d-flex align-items-start" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="">
-                        <div class="d-flex flex-row fs-4 text-danger">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-bell-fill" viewBox="0 0 16 16">
-                                <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"/>
-                            </svg>
-                            <p><strong>{{ index }}</strong></p>
-                        </div>
-                    </button>
-                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Commentaires reçus:</h1>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body d-flex flex-column aside-scrollbar">
-                                    {% for star in app.user.stars %}
-                                        {% for comment in star.comments %}
-                                            {% if star.comments|last.userId != app.user and comment.userId != app.user %}
-                                                <a href="{{ path('app_stars_knowmore', {'id': star.id}) }}">
-                                                    <p>{{ comment.userId.firstname }} {{ comment.userId.lastname }} a commenté votre annonce: {{ star.title }}</p>
-                                                </a>
-                                            {% endif %}
+                    {% endfor %}
+                    {% if index > 0 %}
+                        <button class="btn btn-primary ms-5 h-50 d-flex align-items-start" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="">
+                            <div class="d-flex flex-row fs-4 text-danger">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-bell-fill" viewBox="0 0 16 16">
+                                    <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"/>
+                                </svg>
+                                <p><strong>{{ index }}</strong></p>
+                            </div>
+                        </button>
+                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Commentaires reçus:</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body d-flex flex-column aside-scrollbar">
+                                        {% for star in app.user.stars %}
+                                            {% for comment in star.comments %}
+                                                {% if star.comments|last.userId != app.user and comment.userId != app.user %}
+                                                    <a href="{{ path('app_stars_knowmore', {'id': star.id}) }}">
+                                                        <p>{{ comment.userId.firstname }} {{ comment.userId.lastname }} a commenté votre annonce: {{ star.title }}</p>
+                                                    </a>
+                                                {% endif %}
+                                            {% endfor %}
                                         {% endfor %}
-                                    {% endfor %}
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                {% endif %}
-                </div>
+                    {% endif %}
+                </div> #}
+                {# User's informations. #}
                 <div class="d-flex flex-row justify-content-around mb-5" style="width: 100%">
                     <div class="" style="width: 45%">
                         <h3 class="mb-4">Informations personnelles:</h3>
@@ -60,7 +62,7 @@
                         <p>Présentation: {{ app.user.introduction }}</p>
                         <p>Description: {{ app.user.description }}</p>
                     </div>
-                    <div class="" style="width: 45%;">
+                    <div class="" style="width: 45%;"> {# Informations about user's activity. #}
                         <h3 class="mb-4">Statistiques:</h3>
                         {% if app.user.stars|length > 1 %}
                             <p class="">Vous avez créé {{ app.user.stars|length }} annonces.</p>
@@ -68,48 +70,44 @@
                             <p class="">Vous avez créé {{ app.user.stars|length }} annonce.</p>
                         {% endif %}
                         <p>nombre de messages postés: {{ app.user.comments|length }}</p>
-                            <div>
-                                <h3>Vos derniers commentaires<h3>
-                                <aside class="aside-scrollbar2 d-flex flex-column-reverse">
-                                    {% for comment in app.user.comments %}
-                                        <div class="d-flex flex-column border border-info rounded bg-warning-subtle fs-6">
-                                            <div class="d-flex flex-row">
-                                                <img src={{ comment.userId.avatar }} class="avatar2" alt="image de profil de "{{ comment.userId.firstname }} {{ comment.userId.lastname }}>
-                                                <p class="fw-bold">{{ comment.userId.firstname }} {{ comment.userId.lastname }}</p>
-                                            </div>
-                                            <p>{{ comment.message }}</p>
+                        <div>
+                            <h3>Vos derniers commentaires<h3> {# User's comments. #}
+                            <aside class="aside-scrollbar2 d-flex flex-column-reverse">
+                                {% for comment in app.user.comments %}
+                                    <div class="d-flex flex-column border border-info rounded bg-warning-subtle fs-6">
+                                        <div class="d-flex flex-row">
+                                            <img src={{ comment.userId.avatar }} class="avatar2" alt="image de profil de "{{ comment.userId.firstname }} {{ comment.userId.lastname }}>
+                                            <p class="fw-bold">{{ comment.userId.firstname }} {{ comment.userId.lastname }}</p>
                                         </div>
-                                    {% endfor %}
-                                </aside>
-                            </div>
+                                        <p>{{ comment.message }}</p>
+                                    </div>
+                                {% endfor %}
+                            </aside>
                         </div>
                     </div>
                 </div>
-            
-                <div style="width: 20%;">
-                    <h3>Autres utilisateurs<h3>
-                    <aside class="aside-scrollbar">
-                        {% for user in users %}
-                            <div class="d-flex mb-4">
-                                <img class="avatar2" src="{{ user.avatar }}" alt= "Photo de profil">
-                                <a class="fs-6 mb-3" href="/account/{{ user.id }}">{{ user.firstname }} {{ user.lastname }}</a>
-                            </div>
-                        {% endfor %}
-                    </aside>
-                </div>
             </div>
-
+            <div style="width: 20%;"> {# Other users's list. #}
+                <h3>Autres utilisateurs<h3>
+                <aside class="aside-scrollbar">
+                    {% for user in users %}
+                        <div class="d-flex mb-4">
+                            <img class="avatar2" src="{{ user.avatar }}" alt= "Photo de profil">
+                            <a class="fs-6 mb-3" href="/account/{{ user.id }}">{{ user.firstname }} {{ user.lastname }}</a>
+                        </div>
+                    {% endfor %}
+                </aside>
+            </div>
+        </div>
+        <div>
             <div>
-                <div>
-                    {% if app.user.stars|length > 1 %}
-                        <p class="text-center">Vos annonces:</p>
-                    {% else %}
-                        <p class="text-center">Votre annonce:</p>
-                    {% endif %}
-                </div>
-
-
-            <div class="d-flex flex-wrap justify-content-around">
+                {% if app.user.stars|length > 1 %}
+                    <p class="text-center">Vos annonces:</p>
+                {% else %}
+                    <p class="text-center">Votre annonce:</p>
+                {% endif %}
+            </div>
+            <div class="d-flex flex-wrap justify-content-around"> {# Ads created by the user. #}
                 <div id="carouselExample" class="carousel slide w-50">
                     <div class="carousel-inner">
                         {% for star in app.user.stars %}

@@ -1,16 +1,16 @@
-{% extends "base.html.twig" %}
-
+{% extends "base.html.twig" %} {# Extends the "base" file witch contains the header, the navbar, the footpage for exemple. #}
+{% block title %}Compte utilisateur{% endblock %}
 
 {% block body %}
     <main class="container mt-5">
         <div class="d-flex flex-row justify-content-around">
             <div class="d-flex flex-wrap mb-4" style="width: 75%;">
-                <div class="d-flex flex-wrap mb-4">
+                <div class="d-flex flex-wrap mb-4"> {# Name and picture of the user. #}
                     <img class="avatar" src="{{user.avatar}}" alt= "Photo de profil">
                     <h1 class="mb-3">{{user.firstname}} {{user.lastname}}</h1>
                 </div>
                 <div class="d-flex flex-row justify-content-around mb-5">
-                    <div class="" style="width: 45%;">
+                    <div class="" style="width: 45%;"> {# User's informations #}
                         <h3 class="mb-4">Informations personnelles:</h3>
                         <p class="mb-0">Prénom: {{user.firstname}}</p>
                         <p class="mb-0">Nom: {{user.lastname}}</p>
@@ -18,7 +18,7 @@
                         <p>Présentation: {{user.introduction}}</p>
                         <p>Description: {{user.description}}</p>
                     </div>
-                    <div class="" style="width: 45%;">
+                    <div class="" style="width: 45%;"> {# User's stats. #}
                         <h3 class="mb-4">Statistiques:</h3>
                         {% if user.stars|length > 1 %}
                             <p class="">{{user.firstname}} {{user.lastname}} a créé {{user.stars|length}} annonces.</p>
@@ -29,8 +29,7 @@
                     </div>
                 </div>
             </div>
-            
-            <div style="width: 20%;">
+            <div style="width: 20%;"> {# List of all the current users. #}
                 <h3>Autres utilisateurs<h3>
                 <aside class="aside-scrollbar">
                     {% for person in users %}
@@ -42,7 +41,6 @@
                 </aside>
         </div>
         </div>
-
         <div>
             {% if user.stars|length > 1 %}
                 <p class="text-center">Vos annonces:</p>
@@ -50,9 +48,7 @@
                 <p class="text-center">Votre annonce:</p>
             {% endif %}
         </div>
-
-
-        <div class="d-flex flex-wrap justify-content-around">
+        <div class="d-flex flex-wrap justify-content-around"> {# Ads created by the user. #}
             <div id="carouselExample" class="carousel slide w-50">
                 <div class="carousel-inner">
                     {% for star in app.user.stars %}

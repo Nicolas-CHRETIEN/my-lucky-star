@@ -145,7 +145,7 @@ class CommentsController extends AbstractController {
         $star = $star_repository->findOneById($id);
         $comments = $comment_repository->findAll();
         $answers = $answers_repository->findAll();
-        return $this->render('comments/commentAnswer.html.twig', ['form' => $form->createView(), 'comments' => $comments, 'star' => $star, 'commentTarget' => $commentTarget, 'answers' => $answers, 'target' => 'comment']);
+        return $this->render('comments/commentAnswer.html.twig', ['form' => $form->createView(), 'comments' => $comments, 'star' => $star, 'commentTarget' => $commentTarget, 'answers' => $answers, 'target' => 'comment', 'targetAnswer' => $commentTarget]);
     }
 
     // ----------------------- Edit answer. ---------------------------
