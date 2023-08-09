@@ -1,4 +1,4 @@
-# my-lucky-star: an exercise to learn Symfony.
+# my-lucky-star: a fictional dystopic website.
 
 After I learned PHP and the OOP, I wanted to learn to code with my first framework. 
 Symfony seemed to be the best choice as many developers gave me a great return.
@@ -14,7 +14,8 @@ Of course, this is not a real project.
 
 ### Home:
 
-![Capture](https://github.com/Nicolas-CHRETIEN/my-lucky-star/assets/132827127/006a7a3a-7c59-47f4-818d-64c1f02a08a9)
+![Capture](https://github.com/Nicolas-CHRETIEN/my-lucky-star/assets/132827127/6d9a5a20-6221-44ea-9e42-3b19579f8bc0)
+
 
 
 The home page can be reach by any user. 
@@ -24,7 +25,8 @@ The home page is the only page you can access without register with the stars pa
 
 ### A restricted access:
 
-![register](https://github.com/Nicolas-CHRETIEN/my-lucky-star/assets/132827127/a0b34368-4f9a-41c5-8de2-5c4be8041a59)
+![register](https://github.com/Nicolas-CHRETIEN/my-lucky-star/assets/132827127/4ed87f62-f6dc-49f6-8926-e11cb4a95402)
+
 
 If you're not registered you can't access to many functionalities:
   - You can't comment a product, or answer to a comment
@@ -39,7 +41,8 @@ There are three types of users:
 
 ### The products:
 
-![stars-filters](https://github.com/Nicolas-CHRETIEN/my-lucky-star/assets/132827127/b9780559-8f55-487f-9008-5b83f3538be4)
+![stars-filters](https://github.com/Nicolas-CHRETIEN/my-lucky-star/assets/132827127/39cd6357-d8c4-4d6f-b123-dbd6793b1c9d)
+
 
 
 Here products are real stars.
@@ -48,13 +51,15 @@ You have on the left side several filters to select the type of product you want
 
 As I created a lot of data for this website, I let the possibility to show only 10 results per page by creating a pagination system:
 
-![stars-pagination](https://github.com/Nicolas-CHRETIEN/my-lucky-star/assets/132827127/2db74794-9875-4b77-9a15-223ed1f8bca6)
+![stars-pagination](https://github.com/Nicolas-CHRETIEN/my-lucky-star/assets/132827127/a03ddd62-79ac-464c-b19f-97566a393cc4)
+
 
 
 ### The creation / update:
 
 
-![stars-create-update-star](https://github.com/Nicolas-CHRETIEN/my-lucky-star/assets/132827127/0549970e-cfa7-4d28-ad10-b637acd43622)
+![stars-create-update-star](https://github.com/Nicolas-CHRETIEN/my-lucky-star/assets/132827127/c20d1895-e2a9-4d09-a1e3-e732b7e2e28a)
+
 
 
 If you have the access, you can create or update a star.
@@ -64,7 +69,8 @@ If you update the star, the current information are indicated by default.
 
 ### Product details and comments:
 
-![stars-knowMore-comments](https://github.com/Nicolas-CHRETIEN/my-lucky-star/assets/132827127/a18baa99-3be6-47eb-9b43-06c26771a989)
+![stars-knowMore-comments](https://github.com/Nicolas-CHRETIEN/my-lucky-star/assets/132827127/b88774c7-b9be-4231-a4bf-edef5fb32172)
+
 
 
 When you select a product, the server sends all product information and you have the possibility to add a comment on the product.
@@ -74,7 +80,8 @@ Then the name of the comment's user will be added to your answer which will be l
 
 ### The account page:
 
-![stars-myAccount](https://github.com/Nicolas-CHRETIEN/my-lucky-star/assets/132827127/1ebf5afa-9620-41e0-8e5b-606b4bfa985f)
+![stars-myAccount](https://github.com/Nicolas-CHRETIEN/my-lucky-star/assets/132827127/33141541-1aa8-4072-8e3f-7e6bbc6b1beb)
+
 
 The account page give you many information on a user activity such as the product he created, the comments he send etc...
 From this page you can access to all users account page.
@@ -82,7 +89,8 @@ From this page you can access to all users account page.
 
 ### The data base:
 
-![BDD](https://github.com/Nicolas-CHRETIEN/my-lucky-star/assets/132827127/561203f8-c3fa-4595-b16f-54c23041b464)
+![BDD](https://github.com/Nicolas-CHRETIEN/my-lucky-star/assets/132827127/e668a4b5-c1a6-4f0a-ae83-f08fbc47d359)
+
 
 In the picture above you can see the relations between tables and the different fields of each table.
 
